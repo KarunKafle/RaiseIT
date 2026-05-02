@@ -1,9 +1,10 @@
 package com.raiseit.controller;
 
+
 import com.raiseit.dao.UserDAO;
 import com.raiseit.model.User;
 import com.raiseit.util.PasswordUtil;
-
+import javax.servlet.http.Cookie;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -68,6 +69,16 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("userFullName", user.getFullName());
             session.setAttribute("userRole", user.getRole());
             session.setAttribute("userEmail", user.getEmail());
+            String rememberMe = request.getParameter("rememberMe");
+            if (rememberMe != null) {
+                Cookie emailCookie = new Cookie("rememberedEmail", user.getEmail());
+                emailCookie.setMaxAge(7 * 24 * 60 * 60);
+                response.addCookie(emailCookie);
+            } else {
+                Cookie emailCookie = new Cookie("rememberedEmail", "");
+                emailCookie.setMaxAge(0);
+                response.addCookie(emailCookie);
+            }
 
             if (user.getRole().equals("admin")) {
                 response.sendRedirect(request.getContextPath() + "/admin/dashboard");
