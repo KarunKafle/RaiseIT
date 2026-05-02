@@ -49,4 +49,23 @@ public class UserDAO {
             return rs.next();
         }
     }
+    public int getTotalUsers() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM users WHERE role != 'admin'";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) return rs.getInt(1);
+        }
+        return 0;
+    }
+
+    public int getPendingUsers() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM users WHERE status = 'pending'";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) return rs.getInt(1);
+        }
+        return 0;
+    }
 }
