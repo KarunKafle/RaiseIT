@@ -199,4 +199,46 @@ public class ComplaintDAO {
         }
         return complaints;
     }
+
+    public boolean assignComplaintToStaff(int complaintId, int staffId) throws SQLException {
+        String sql1 = "UPDATE complaints SET status = 'assigned' WHERE id = ?";
+        String sql2 = "INSERT INTO assignments (complaint_id, staff_id, deadline) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 7 DAY))";
+        try (Connection conn = DBConnection.getConnection()) {
+            conn.setAutoCommit(false);
+            try (PreparedStatement ps1 = conn.prepareStatement(sql1);
+                 PreparedStatement ps2 = conn.prepareStatement(sql2)) {
+                ps1.setInt(1, complaintId);
+                ps1.executeUpdate();
+                ps2.setInt(1, complaintId);
+                ps2.setInt(2, staffId);
+                ps2.executeUpdate();
+                conn.commit();
+                return true;
+            } catch (SQLException e) {
+                conn.rollback();
+                throw e;
+            }
+        }
+    }
+
+    public List<Complaint> getComplaintsAssignedToStaff(int staffId) throws SQLException {
+        List<Complaint> complaints = new ArrayList<>();
+        String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
+                "u.full_name as student_name FROM complaints c " +
+                "JOIN categories cat ON c.category_id = cat.id " +
+                "JOIN departments d ON cat.department_id = d.id " +
+                "LEFT JOIN users u ON c.user_id = u.id " +
+                "JOIN assignments a ON c.id = a.complaint_id " +
+                "WHERE a.staff_id = ? AND c.status IN ('assigned', 'in_progress') " +
+                "ORDER BY c.created_at DESC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, staffId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                complaints.add(mapRow(rs));
+            }
+        }
+        return complaints;
+    }
 }

@@ -119,4 +119,22 @@ public class UserDAO {
             return ps.executeUpdate() > 0;
         }
     }
+    public List<User> getStaffUsers() throws SQLException {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users WHERE role = 'staff' AND status = 'active'";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setFullName(rs.getString("full_name"));
+                user.setEmail(rs.getString("email"));
+                user.setRole(rs.getString("role"));
+                user.setStatus(rs.getString("status"));
+                users.add(user);
+            }
+        }
+        return users;
+    }
 }

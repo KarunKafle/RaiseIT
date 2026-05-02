@@ -47,40 +47,44 @@
                             </c:choose>
                         </td>
                         <td>${complaint.categoryName}</td>
-                        <td>
-                            <span class="badge badge-${complaint.priority}">${complaint.priority}</span>
-                        </td>
-                        <td>
-                            <span class="badge badge-${complaint.status}">${complaint.status}</span>
-                        </td>
+                        <td><span class="badge badge-${complaint.priority}">${complaint.priority}</span></td>
+                        <td><span class="badge badge-${complaint.status}">${complaint.status}</span></td>
                         <td>${complaint.createdAt}</td>
                         <td>
-                            <c:if test="${complaint.status == 'submitted'}">
-                                <form method="post" action="${pageContext.request.contextPath}/admin/complaints" style="display:inline">
+                            <div class="action-stack">
+                                <c:if test="${complaint.status == 'submitted'}">
+                                    <form method="post" action="${pageContext.request.contextPath}/admin/complaints">
+                                        <input type="hidden" name="complaintId" value="${complaint.id}">
+                                        <input type="hidden" name="action" value="assign">
+                                        <select name="staffId" class="staff-select" required>
+                                            <option value="">Select Staff</option>
+                                            <c:forEach var="staff" items="${staffList}">
+                                                <option value="${staff.id}">${staff.fullName}</option>
+                                            </c:forEach>
+                                        </select>
+                                        <button type="submit" class="btn-approve">Assign</button>
+                                    </form>
+                                </c:if>
+                                <c:if test="${complaint.status == 'assigned' or complaint.status == 'in_progress'}">
+                                    <form method="post" action="${pageContext.request.contextPath}/admin/complaints">
+                                        <input type="hidden" name="complaintId" value="${complaint.id}">
+                                        <input type="hidden" name="action" value="resolve">
+                                        <button type="submit" class="btn-approve">Resolve</button>
+                                    </form>
+                                </c:if>
+                                <c:if test="${complaint.status == 'resolved'}">
+                                    <form method="post" action="${pageContext.request.contextPath}/admin/complaints">
+                                        <input type="hidden" name="complaintId" value="${complaint.id}">
+                                        <input type="hidden" name="action" value="close">
+                                        <button type="submit" class="btn-suspend">Close</button>
+                                    </form>
+                                </c:if>
+                                <form method="post" action="${pageContext.request.contextPath}/admin/complaints">
                                     <input type="hidden" name="complaintId" value="${complaint.id}">
-                                    <input type="hidden" name="action" value="assign">
-                                    <button type="submit" class="btn-approve">Assign</button>
+                                    <input type="hidden" name="action" value="delete">
+                                    <button type="submit" class="btn-delete" onclick="return confirm('Delete this complaint?')">Delete</button>
                                 </form>
-                            </c:if>
-                            <c:if test="${complaint.status == 'assigned' or complaint.status == 'in_progress'}">
-                                <form method="post" action="${pageContext.request.contextPath}/admin/complaints" style="display:inline">
-                                    <input type="hidden" name="complaintId" value="${complaint.id}">
-                                    <input type="hidden" name="action" value="resolve">
-                                    <button type="submit" class="btn-approve">Resolve</button>
-                                </form>
-                            </c:if>
-                            <c:if test="${complaint.status == 'resolved'}">
-                                <form method="post" action="${pageContext.request.contextPath}/admin/complaints" style="display:inline">
-                                    <input type="hidden" name="complaintId" value="${complaint.id}">
-                                    <input type="hidden" name="action" value="close">
-                                    <button type="submit" class="btn-suspend">Close</button>
-                                </form>
-                            </c:if>
-                            <form method="post" action="${pageContext.request.contextPath}/admin/complaints" style="display:inline">
-                                <input type="hidden" name="complaintId" value="${complaint.id}">
-                                <input type="hidden" name="action" value="delete">
-                                <button type="submit" class="btn-delete" onclick="return confirm('Delete this complaint?')">Delete</button>
-                            </form>
+                            </div>
                         </td>
                     </tr>
                 </c:forEach>

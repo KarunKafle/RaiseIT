@@ -1,6 +1,7 @@
 package com.raiseit.controller;
 
 import com.raiseit.dao.ComplaintDAO;
+import com.raiseit.dao.UserDAO;
 import com.raiseit.model.Complaint;
 
 import javax.servlet.ServletException;
@@ -19,8 +20,10 @@ public class AdminComplaintServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             ComplaintDAO complaintDAO = new ComplaintDAO();
+            UserDAO userDAO = new UserDAO();
             List<Complaint> complaints = complaintDAO.getAllComplaints();
             request.setAttribute("complaints", complaints);
+            request.setAttribute("staffList", userDAO.getStaffUsers());
             request.getRequestDispatcher("/WEB-INF/views/admin/complaints.jsp")
                     .forward(request, response);
         } catch (SQLException e) {
@@ -40,7 +43,11 @@ public class AdminComplaintServlet extends HttpServlet {
 
             switch (action) {
                 case "assign":
-                    complaintDAO.updateComplaintStatus(complaintId, "assigned");
+                    String staffIdStr = request.getParameter("staffId");
+                    if (staffIdStr != null && !staffIdStr.isEmpty()) {
+                        int staffId = Integer.parseInt(staffIdStr);
+                        complaintDAO.assignComplaintToStaff(complaintId, staffId);
+                    }
                     break;
                 case "resolve":
                     complaintDAO.updateComplaintStatus(complaintId, "resolved");
