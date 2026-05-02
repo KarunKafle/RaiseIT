@@ -100,4 +100,61 @@ public class ComplaintDAO {
         c.setStudentName(rs.getString("student_name"));
         return c;
     }
+
+    public List<Complaint> getComplaintsByUserId(int userId) throws SQLException {
+        List<Complaint> complaints = new ArrayList<>();
+        String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
+                "u.full_name as student_name FROM complaints c " +
+                "JOIN categories cat ON c.category_id = cat.id " +
+                "JOIN departments d ON cat.department_id = d.id " +
+                "LEFT JOIN users u ON c.user_id = u.id " +
+                "WHERE c.user_id = ? ORDER BY c.created_at DESC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                complaints.add(mapRow(rs));
+            }
+        }
+        return complaints;
+    }
+
+    public List<Complaint> getComplaintsByUserIdAndStatus(int userId, String status) throws SQLException {
+        List<Complaint> complaints = new ArrayList<>();
+        String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
+                "u.full_name as student_name FROM complaints c " +
+                "JOIN categories cat ON c.category_id = cat.id " +
+                "JOIN departments d ON cat.department_id = d.id " +
+                "LEFT JOIN users u ON c.user_id = u.id " +
+                "WHERE c.user_id = ? AND c.status = ? ORDER BY c.created_at DESC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setString(2, status);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                complaints.add(mapRow(rs));
+            }
+        }
+        return complaints;
+    }
+
+    public String submitComplaint(Complaint complaint) throws SQLException {
+        String refNumber = "RIT2026-" + String.format("%05d", (int)(Math.random() * 99999));
+        String sql = "INSERT INTO complaints (reference_number, user_id, title, description, category_id, priority, status, is_anonymous) " +
+                "VALUES (?, ?, ?, ?, ?, ?, 'submitted', ?)";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, refNumber);
+            ps.setInt(2, complaint.getUserId());
+            ps.setString(3, complaint.getTitle());
+            ps.setString(4, complaint.getDescription());
+            ps.setInt(5, complaint.getCategoryId());
+            ps.setString(6, complaint.getPriority());
+            ps.setBoolean(7, complaint.isAnonymous());
+            ps.executeUpdate();
+        }
+        return refNumber;
+    }
 }
