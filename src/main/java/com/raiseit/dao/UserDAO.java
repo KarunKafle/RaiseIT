@@ -108,4 +108,15 @@ public class UserDAO {
             return ps.executeUpdate() > 0;
         }
     }
+
+    public boolean updateUser(User user) throws SQLException {
+        String sql = "UPDATE users SET full_name = ?, password = ? WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getFullName());
+            ps.setString(2, user.getPassword());
+            ps.setInt(3, user.getId());
+            return ps.executeUpdate() > 0;
+        }
+    }
 }
