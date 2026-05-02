@@ -11,6 +11,7 @@
     <div class="sidebar">
         <div class="sidebar-brand">RaiseIT</div>
         <nav>
+            <a href="${pageContext.request.contextPath}/student/search">Search</a>
             <a href="${pageContext.request.contextPath}/student/dashboard">Dashboard</a>
             <a href="${pageContext.request.contextPath}/student/complaints">My Complaints</a>
             <a href="${pageContext.request.contextPath}/student/submit">Submit Complaint</a>

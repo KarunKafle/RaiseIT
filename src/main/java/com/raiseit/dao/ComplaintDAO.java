@@ -157,4 +157,27 @@ public class ComplaintDAO {
         }
         return refNumber;
     }
+
+    public List<Complaint> searchComplaints(int userId, String keyword) throws SQLException {
+        List<Complaint> complaints = new ArrayList<>();
+        String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
+                "u.full_name as student_name FROM complaints c " +
+                "JOIN categories cat ON c.category_id = cat.id " +
+                "JOIN departments d ON cat.department_id = d.id " +
+                "LEFT JOIN users u ON c.user_id = u.id " +
+                "WHERE c.user_id = ? AND (c.title LIKE ? OR c.reference_number LIKE ? OR c.description LIKE ?) " +
+                "ORDER BY c.created_at DESC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setString(2, "%" + keyword + "%");
+            ps.setString(3, "%" + keyword + "%");
+            ps.setString(4, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                complaints.add(mapRow(rs));
+            }
+        }
+        return complaints;
+    }
 }
