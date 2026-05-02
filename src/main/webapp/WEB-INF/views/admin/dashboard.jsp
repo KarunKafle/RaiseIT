@@ -10,45 +10,81 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
-
-<nav class="navbar">
-  <a class="navbar-brand" href="#">Raise<span>IT</span></a>
-  <ul class="navbar-links">
-    <li><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
-    <li><a href="${pageContext.request.contextPath}/admin/users">Users</a></li>
-    <li><a href="${pageContext.request.contextPath}/admin/complaints">Complaints</a></li>
-    <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
-  </ul>
-</nav>
-
-<div class="dashboard-wrapper">
-  <aside class="sidebar">
-    <ul class="sidebar-menu">
-      <li><a href="${pageContext.request.contextPath}/admin/dashboard" class="active">Dashboard</a></li>
-      <li><a href="${pageContext.request.contextPath}/admin/users">Manage Users</a></li>
-      <li><a href="${pageContext.request.contextPath}/admin/complaints">Manage Complaints</a></li>
-      <li><a href="${pageContext.request.contextPath}/admin/departments">Departments</a></li>
-      <li><a href="${pageContext.request.contextPath}/admin/reports">Reports</a></li>
-    </ul>
-  </aside>
-
-  <main class="main-content">
+<div class="dashboard-container">
+  <div class="sidebar">
+    <div class="sidebar-brand">RaiseIT</div>
+    <nav>
+      <a href="${pageContext.request.contextPath}/admin/dashboard" class="active">Dashboard</a>
+      <a href="${pageContext.request.contextPath}/admin/users">Manage Users</a>
+      <a href="${pageContext.request.contextPath}/admin/complaints">Manage Complaints</a>
+      <a href="${pageContext.request.contextPath}/logout">Logout</a>
+    </nav>
+  </div>
+  <div class="main-content">
     <div class="page-header">
-      <h2>Welcome, <%= session.getAttribute("userFullName") %></h2>
+      <h1>Welcome, <%= session.getAttribute("userFullName") %></h1>
     </div>
-
     <div class="stats-grid">
       <div class="stat-card">
-        <h3>${totalComplaints}</h3>
-        <p>Total Complaints</p>
+        <h3>Total Complaints</h3>
+        <p class="stat-number">${totalComplaints}</p>
       </div>
       <div class="stat-card">
-        <h3>${pendingComplaints}</h3>
-        <p>Pending Review</p>
+        <h3>Pending Review</h3>
+        <p class="stat-number">${pendingComplaints}</p>
       </div>
       <div class="stat-card">
-        <h3>${inProgressComplaints}</h3>
-        <p>In Progress</p>
+        <h3>In Progress</h3>
+        <p class="stat-number">${inProgressComplaints}</p>
       </div>
       <div class="stat-card">
-        <h3>${resolvedComplaints}</h3>
+        <h3>Resolved</h3>
+        <p class="stat-number">${resolvedComplaints}</p>
+      </div>
+      <div class="stat-card">
+        <h3>Total Users</h3>
+        <p class="stat-number">${totalUsers}</p>
+      </div>
+      <div class="stat-card">
+        <h3>Pending Users</h3>
+        <p class="stat-number">${pendingUsers}</p>
+      </div>
+    </div>
+    <div class="table-container">
+      <div class="page-header" style="padding: 20px 20px 0 20px;">
+        <h2 style="font-size:1.1rem;">Recent Complaints</h2>
+      </div>
+      <table class="data-table">
+        <thead>
+        <tr>
+          <th>Reference</th>
+          <th>Title</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <%
+          List<Complaint> recentComplaints = (List<Complaint>) request.getAttribute("recentComplaints");
+          if (recentComplaints != null) {
+            for (Complaint c : recentComplaints) {
+        %>
+        <tr>
+          <td><%= c.getReferenceNumber() %></td>
+          <td><%= c.getTitle() %></td>
+          <td><span class="badge badge-<%= c.getPriority() %>"><%= c.getPriority() %></span></td>
+          <td><span class="badge badge-<%= c.getStatus() %>"><%= c.getStatus() %></span></td>
+          <td><%= c.getCreatedAt() %></td>
+        </tr>
+        <%
+            }
+          }
+        %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>

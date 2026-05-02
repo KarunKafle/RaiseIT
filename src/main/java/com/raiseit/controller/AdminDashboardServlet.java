@@ -25,9 +25,9 @@ public class AdminDashboardServlet extends HttpServlet {
             UserDAO userDAO = new UserDAO();
 
             int totalComplaints = complaintDAO.getTotalComplaints();
-            int pendingComplaints = complaintDAO.getComplaintsByStatus("submitted");
-            int inProgressComplaints = complaintDAO.getComplaintsByStatus("in_progress");
-            int resolvedComplaints = complaintDAO.getComplaintsByStatus("resolved");
+            int pendingComplaints = complaintDAO.countComplaintsByStatus("submitted");
+            int inProgressComplaints = complaintDAO.countComplaintsByStatus("in_progress");
+            int resolvedComplaints = complaintDAO.countComplaintsByStatus("resolved");
             int totalUsers = userDAO.getTotalUsers();
             int pendingUsers = userDAO.getPendingUsers();
 

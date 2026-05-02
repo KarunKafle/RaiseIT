@@ -1,6 +1,7 @@
 package com.raiseit.controller;
 
 import com.raiseit.dao.ComplaintDAO;
+import com.raiseit.model.Complaint;
 import com.raiseit.model.User;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/staff/dashboard")
 public class StaffDashboardServlet extends HttpServlet {
@@ -22,13 +24,13 @@ public class StaffDashboardServlet extends HttpServlet {
 
         try {
             ComplaintDAO complaintDAO = new ComplaintDAO();
-            int totalAssigned = complaintDAO.getComplaintsByStatus("assigned").size();
-            int inProgress = complaintDAO.getComplaintsByStatus("in_progress").size();
-            int resolved = complaintDAO.getComplaintsByStatus("resolved").size();
+            List<Complaint> assignedList = complaintDAO.getComplaintsByStatus("assigned");
+            List<Complaint> inProgressList = complaintDAO.getComplaintsByStatus("in_progress");
+            List<Complaint> resolvedList = complaintDAO.getComplaintsByStatus("resolved");
 
-            request.setAttribute("totalAssigned", totalAssigned);
-            request.setAttribute("inProgress", inProgress);
-            request.setAttribute("resolved", resolved);
+            request.setAttribute("totalAssigned", assignedList.size());
+            request.setAttribute("inProgress", inProgressList.size());
+            request.setAttribute("resolved", resolvedList.size());
 
             request.getRequestDispatcher("/WEB-INF/views/staff/dashboard.jsp")
                     .forward(request, response);

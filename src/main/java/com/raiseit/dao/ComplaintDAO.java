@@ -37,7 +37,7 @@ public class ComplaintDAO {
         return 0;
     }
 
-    public int getComplaintsByStatus(String status) throws SQLException {
+    public int countComplaintsByStatus(String status) throws SQLException {
         String sql = "SELECT COUNT(*) FROM complaints WHERE status = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -173,6 +173,25 @@ public class ComplaintDAO {
             ps.setString(2, "%" + keyword + "%");
             ps.setString(3, "%" + keyword + "%");
             ps.setString(4, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                complaints.add(mapRow(rs));
+            }
+        }
+        return complaints;
+    }
+
+    public List<Complaint> getComplaintsByStatus(String status) throws SQLException {
+        List<Complaint> complaints = new ArrayList<>();
+        String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
+                "u.full_name as student_name FROM complaints c " +
+                "JOIN categories cat ON c.category_id = cat.id " +
+                "JOIN departments d ON cat.department_id = d.id " +
+                "LEFT JOIN users u ON c.user_id = u.id " +
+                "WHERE c.status = ? ORDER BY c.created_at DESC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, status);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 complaints.add(mapRow(rs));
