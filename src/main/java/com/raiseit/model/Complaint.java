@@ -13,6 +13,7 @@ public class Complaint {
     private String status;
     private boolean isAnonymous;
     private Timestamp createdAt;
+    private String userName;
     private String categoryName;
     private String departmentName;
     private String studentName;
@@ -48,6 +49,9 @@ public class Complaint {
 
     public Timestamp getCreatedAt() { return createdAt; }
     public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }
+
+    public String getUserName() { return userName; }
+    public void setUserName(String userName) { this.userName = userName; }
 
     public String getCategoryName() { return categoryName; }
     public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
