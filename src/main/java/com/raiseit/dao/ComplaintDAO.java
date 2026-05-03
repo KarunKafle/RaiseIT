@@ -59,11 +59,22 @@ public class ComplaintDAO {
     }
 
     public boolean deleteComplaint(int complaintId) throws SQLException {
-        String sql = "DELETE FROM complaints WHERE id = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, complaintId);
-            return ps.executeUpdate() > 0;
+        String sql1 = "DELETE FROM assignments WHERE complaint_id = ?";
+        String sql2 = "DELETE FROM complaints WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection()) {
+            conn.setAutoCommit(false);
+            try (PreparedStatement ps1 = conn.prepareStatement(sql1);
+                 PreparedStatement ps2 = conn.prepareStatement(sql2)) {
+                ps1.setInt(1, complaintId);
+                ps1.executeUpdate();
+                ps2.setInt(1, complaintId);
+                ps2.executeUpdate();
+                conn.commit();
+                return true;
+            } catch (SQLException e) {
+                conn.rollback();
+                throw e;
+            }
         }
     }
 
