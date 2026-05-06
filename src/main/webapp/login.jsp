@@ -47,7 +47,7 @@
             <button type="submit" class="btn-primary">Sign In</button>
         </form>
         <div class="auth-footer">
-            <p>Don't have an account? <a href="${pageContext.request.contextPath}/register">Register here</a></p>
+            <p>Don't have an account? <a href="${pageContext.request.contextPath}/register">Register Here</a></p>
         </div>
     </div>
 </div>
