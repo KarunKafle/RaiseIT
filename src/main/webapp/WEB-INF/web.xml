@@ -18,4 +18,13 @@
         <url-pattern>/admin/departments</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AdminCategoryServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.AdminCategoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminCategoryServlet</servlet-name>
+        <url-pattern>/admin/categories</url-pattern>
+    </servlet-mapping>
+
 </web-app>
