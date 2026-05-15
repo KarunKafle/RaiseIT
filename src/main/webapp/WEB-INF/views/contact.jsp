@@ -38,6 +38,10 @@
                     <input type="email" name="email" placeholder="Enter your email" required>
                 </div>
                 <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" name="phone" placeholder="Enter your phone number" required>
+                </div>
+                <div class="form-group">
                     <label>Message</label>
                     <textarea name="message" rows="6" placeholder="Write your message here" required></textarea>
                 </div>
