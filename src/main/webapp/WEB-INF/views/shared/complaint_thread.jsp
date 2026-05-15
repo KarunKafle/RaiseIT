@@ -5,6 +5,16 @@
 <head>
     <title>Complaint Thread - RaiseIT</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <style>
+        .closed-notice {
+            background: #f3f4f6;
+            color: var(--text-light);
+            text-align: center;
+            padding: 14px 16px;
+            border-radius: 10px;
+            margin-top: 24px;
+        }
+    </style>
 </head>
 <body>
 <div class="dashboard-container">
@@ -86,17 +96,22 @@
             </div>
         </c:if>
 
-        <div class="form-container" style="max-width: 900px; margin-top: 24px;">
-            <h2>Write a Reply</h2>
-            <form method="post" action="${pageContext.request.contextPath}/thread">
-                <input type="hidden" name="complaintId" value="${complaint.id}">
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="4" required></textarea>
-                </div>
-                <button type="submit" class="btn-primary">Send Reply</button>
-            </form>
-        </div>
+        <c:if test="${complaintStatus != 'closed'}">
+            <div class="form-container" style="max-width: 900px; margin-top: 24px;">
+                <h2>Write a Reply</h2>
+                <form method="post" action="${pageContext.request.contextPath}/thread">
+                    <input type="hidden" name="complaintId" value="${complaint.id}">
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Send Reply</button>
+                </form>
+            </div>
+        </c:if>
+        <c:if test="${complaintStatus == 'closed'}">
+            <div class="closed-notice">This complaint has been closed. No further replies can be submitted.</div>
+        </c:if>
     </div>
 </div>
 </body>

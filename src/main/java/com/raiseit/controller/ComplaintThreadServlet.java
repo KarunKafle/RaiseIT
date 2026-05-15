@@ -69,6 +69,7 @@ public class ComplaintThreadServlet extends HttpServlet {
             request.setAttribute("complaint", complaint);
             request.setAttribute("responses", responses);
             request.setAttribute("feedback", feedback);
+            request.setAttribute("complaintStatus", complaint.getStatus());
 
             request.getRequestDispatcher("/WEB-INF/views/shared/complaint_thread.jsp")
                     .forward(request, response);
