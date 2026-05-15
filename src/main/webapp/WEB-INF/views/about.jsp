@@ -12,6 +12,7 @@
         <nav>
             <a href="${pageContext.request.contextPath}/about" class="active">About</a>
             <a href="${pageContext.request.contextPath}/contact">Contact</a>
+            <a href="${pageContext.request.contextPath}/faq">FAQ</a>
             <a href="${pageContext.request.contextPath}/login">Login</a>
         </nav>
     </div>

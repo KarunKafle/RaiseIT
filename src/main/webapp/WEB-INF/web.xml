@@ -63,4 +63,13 @@
         <url-pattern>/admin/contacts</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>FaqServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.FaqServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FaqServlet</servlet-name>
+        <url-pattern>/faq</url-pattern>
+    </servlet-mapping>
+
 </web-app>

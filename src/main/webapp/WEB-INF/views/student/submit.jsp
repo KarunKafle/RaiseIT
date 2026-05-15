@@ -15,6 +15,7 @@
             <a href="${pageContext.request.contextPath}/student/dashboard">Dashboard</a>
             <a href="${pageContext.request.contextPath}/student/complaints">My Complaints</a>
             <a href="${pageContext.request.contextPath}/student/submit" class="active">Submit Complaint</a>
+            <a href="${pageContext.request.contextPath}/faq">FAQ</a>
             <a href="${pageContext.request.contextPath}/student/profile">My Profile</a>
             <a href="${pageContext.request.contextPath}/logout">Logout</a>
         </nav>
