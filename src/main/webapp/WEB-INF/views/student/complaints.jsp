@@ -38,13 +38,14 @@
                     <th>Status</th>
                     <th>Date</th>
                     <th>Thread</th>
+                    <th>Feedback</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:choose>
                     <c:when test="${empty complaints}">
                         <tr>
-                            <td colspan="7" style="text-align:center;">No complaints submitted yet.</td>
+                            <td colspan="8" style="text-align:center;">No complaints submitted yet.</td>
                         </tr>
                     </c:when>
                     <c:otherwise>
@@ -62,6 +63,14 @@
                                 <td>${complaint.createdAt}</td>
                                 <td>
                                     <a class="btn-secondary" href="${pageContext.request.contextPath}/thread?complaintId=${complaint.id}">View Thread</a>
+                                </td>
+                                <td>
+                                    <c:if test="${complaint.status == 'resolved'}">
+                                        <a class="btn-secondary" href="${pageContext.request.contextPath}/feedback?complaintId=${complaint.id}">Leave Feedback</a>
+                                    </c:if>
+                                    <c:if test="${complaint.status != 'resolved'}">
+                                        <span style="color:#6b7280;">Not Available</span>
+                                    </c:if>
                                 </td>
                             </tr>
                         </c:forEach>

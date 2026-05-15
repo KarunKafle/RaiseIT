@@ -1,8 +1,10 @@
 package com.raiseit.controller;
 
 import com.raiseit.dao.ComplaintDAO;
+import com.raiseit.dao.FeedbackDAO;
 import com.raiseit.dao.ResponseDAO;
 import com.raiseit.model.Complaint;
+import com.raiseit.model.Feedback;
 import com.raiseit.model.Response;
 
 import javax.servlet.ServletException;
@@ -61,8 +63,12 @@ public class ComplaintThreadServlet extends HttpServlet {
             }
 
             List<Response> responses = responseDAO.getResponsesByComplaintId(complaintId);
+            FeedbackDAO feedbackDAO = new FeedbackDAO();
+            Feedback feedback = feedbackDAO.getFeedbackByComplaintId(complaintId);
+
             request.setAttribute("complaint", complaint);
             request.setAttribute("responses", responses);
+            request.setAttribute("feedback", feedback);
 
             request.getRequestDispatcher("/WEB-INF/views/shared/complaint_thread.jsp")
                     .forward(request, response);

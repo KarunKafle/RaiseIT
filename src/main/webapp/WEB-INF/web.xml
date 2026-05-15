@@ -36,4 +36,13 @@
         <url-pattern>/thread</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>FeedbackServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.FeedbackServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FeedbackServlet</servlet-name>
+        <url-pattern>/feedback</url-pattern>
+    </servlet-mapping>
+
 </web-app>

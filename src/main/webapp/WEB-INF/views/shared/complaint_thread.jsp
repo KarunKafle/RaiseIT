@@ -68,6 +68,24 @@
             </c:choose>
         </div>
 
+        <c:if test="${not empty feedback}">
+            <div class="form-container" style="max-width: 900px; margin-top: 24px;">
+                <h2>Feedback</h2>
+                <p><strong>Rating:</strong> ${feedback.rating} / 5</p>
+                <c:if test="${not empty feedback.comment}">
+                    <p><strong>Comment:</strong> ${feedback.comment}</p>
+                </c:if>
+                <p style="color:#6b7280; font-size:0.85rem; margin-top: 6px;">Submitted by ${feedback.studentName} on ${feedback.createdAt}</p>
+            </div>
+        </c:if>
+
+        <c:if test="${complaint.status == 'resolved' and sessionScope.userRole == 'student' and empty feedback}">
+            <div class="form-container" style="max-width: 900px; margin-top: 24px;">
+                <h2>Leave Feedback</h2>
+                <a class="btn-primary" href="${pageContext.request.contextPath}/feedback?complaintId=${complaint.id}">Leave Feedback</a>
+            </div>
+        </c:if>
+
         <div class="form-container" style="max-width: 900px; margin-top: 24px;">
             <h2>Write a Reply</h2>
             <form method="post" action="${pageContext.request.contextPath}/thread">
