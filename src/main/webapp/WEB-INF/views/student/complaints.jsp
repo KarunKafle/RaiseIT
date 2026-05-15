@@ -48,6 +48,7 @@
                     gap: 12px;
                     z-index: 9999;
                     animation: slideInRight 0.4s ease-out;
+                    overflow: hidden;
                 }
                 .toast-warning.fade-out {
                     animation: fadeOut 0.4s ease-in forwards;
@@ -60,10 +61,24 @@
                     cursor: pointer;
                     line-height: 1;
                 }
+                .toast-progress {
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    height: 3px;
+                    width: 100%;
+                    background: rgba(255, 255, 255, 0.7);
+                    animation: toastTimer 4s linear forwards;
+                }
+                @keyframes toastTimer {
+                    from { width: 100%; }
+                    to { width: 0%; }
+                }
             </style>
             <div class="toast-warning" id="feedback-toast">
                 <span>You have already submitted feedback for this complaint.</span>
                 <button type="button" aria-label="Close" onclick="dismissToast()">&times;</button>
+                <div class="toast-progress"></div>
             </div>
             <script>
                 function dismissToast() {
