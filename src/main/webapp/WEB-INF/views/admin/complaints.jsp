@@ -35,6 +35,7 @@
                     <th>Status</th>
                     <th>Date</th>
                     <th>Actions</th>
+                    <th>Thread</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -87,6 +88,9 @@
                                     <button type="submit" class="btn-delete" onclick="return confirm('Delete this complaint?')">Delete</button>
                                 </form>
                             </div>
+                        </td>
+                        <td>
+                            <a class="btn-secondary" href="${pageContext.request.contextPath}/thread?complaintId=${complaint.id}">View Thread</a>
                         </td>
                     </tr>
                 </c:forEach>

@@ -31,13 +31,14 @@
                     <th>Priority</th>
                     <th>Status</th>
                     <th>Actions</th>
+                    <th>Thread</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:choose>
                     <c:when test="${empty complaints}">
                         <tr>
-                            <td colspan="7" style="text-align:center;">No complaints assigned yet.</td>
+                            <td colspan="8" style="text-align:center;">No complaints assigned yet.</td>
                         </tr>
                     </c:when>
                     <c:otherwise>
@@ -69,6 +70,9 @@
                                             <button type="submit" class="btn-approve">Resolve</button>
                                         </form>
                                     </c:if>
+                                </td>
+                                <td>
+                                    <a class="btn-secondary" href="${pageContext.request.contextPath}/thread?complaintId=${complaint.id}">View Thread</a>
                                 </td>
                             </tr>
                         </c:forEach>

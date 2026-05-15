@@ -37,13 +37,14 @@
                     <th>Priority</th>
                     <th>Status</th>
                     <th>Date</th>
+                    <th>Thread</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:choose>
                     <c:when test="${empty complaints}">
                         <tr>
-                            <td colspan="6" style="text-align:center;">No complaints submitted yet.</td>
+                            <td colspan="7" style="text-align:center;">No complaints submitted yet.</td>
                         </tr>
                     </c:when>
                     <c:otherwise>
@@ -59,6 +60,9 @@
                                     <span class="badge badge-${complaint.status}">${complaint.status}</span>
                                 </td>
                                 <td>${complaint.createdAt}</td>
+                                <td>
+                                    <a class="btn-secondary" href="${pageContext.request.contextPath}/thread?complaintId=${complaint.id}">View Thread</a>
+                                </td>
                             </tr>
                         </c:forEach>
                     </c:otherwise>

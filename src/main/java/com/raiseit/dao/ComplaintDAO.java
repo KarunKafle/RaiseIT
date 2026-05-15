@@ -94,6 +94,18 @@ public class ComplaintDAO {
         return null;
     }
 
+    public boolean isComplaintAssignedToStaff(int complaintId, int staffId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM assignments WHERE complaint_id = ? AND staff_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, complaintId);
+            ps.setInt(2, staffId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return rs.getInt(1) > 0;
+        }
+        return false;
+    }
+
     private Complaint mapRow(ResultSet rs) throws SQLException {
         Complaint c = new Complaint();
         c.setId(rs.getInt("id"));
