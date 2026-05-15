@@ -45,4 +45,22 @@
         <url-pattern>/feedback</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AdminReportServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.AdminReportServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminReportServlet</servlet-name>
+        <url-pattern>/admin/reports</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminContactServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.AdminContactServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminContactServlet</servlet-name>
+        <url-pattern>/admin/contacts</url-pattern>
+    </servlet-mapping>
+
 </web-app>

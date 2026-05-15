@@ -16,6 +16,8 @@
             <a href="${pageContext.request.contextPath}/admin/complaints">Complaints</a>
             <a href="${pageContext.request.contextPath}/admin/departments">Departments</a>
             <a href="${pageContext.request.contextPath}/admin/categories" class="active">Categories</a>
+            <a href="${pageContext.request.contextPath}/admin/reports">Reports</a>
+            <a href="${pageContext.request.contextPath}/admin/contacts">Contact Inquiries</a>
             <a href="${pageContext.request.contextPath}/logout">Logout</a>
         </nav>
     </div>
