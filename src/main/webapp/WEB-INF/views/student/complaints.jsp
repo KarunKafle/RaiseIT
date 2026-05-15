@@ -24,6 +24,59 @@
             <h1>My Complaints</h1>
             <a href="${pageContext.request.contextPath}/student/submit" class="btn-primary">Submit New</a>
         </div>
+        <c:if test="${param.error == 'already_submitted'}">
+            <style>
+                @keyframes slideInRight {
+                    from { transform: translateX(120%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes fadeOut {
+                    from { opacity: 1; }
+                    to { opacity: 0; }
+                }
+                .toast-warning {
+                    position: fixed;
+                    top: 80px;
+                    right: 20px;
+                    background: var(--warning);
+                    color: #ffffff;
+                    padding: 12px 16px;
+                    border-radius: 10px;
+                    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    z-index: 9999;
+                    animation: slideInRight 0.4s ease-out;
+                }
+                .toast-warning.fade-out {
+                    animation: fadeOut 0.4s ease-in forwards;
+                }
+                .toast-warning button {
+                    background: transparent;
+                    border: none;
+                    color: #ffffff;
+                    font-size: 1rem;
+                    cursor: pointer;
+                    line-height: 1;
+                }
+            </style>
+            <div class="toast-warning" id="feedback-toast">
+                <span>You have already submitted feedback for this complaint.</span>
+                <button type="button" aria-label="Close" onclick="dismissToast()">&times;</button>
+            </div>
+            <script>
+                function dismissToast() {
+                    var toast = document.getElementById('feedback-toast');
+                    if (!toast) return;
+                    toast.classList.add('fade-out');
+                    setTimeout(function () { toast.remove(); }, 400);
+                }
+                setTimeout(function () {
+                    dismissToast();
+                }, 4000);
+            </script>
+        </c:if>
         <c:if test="${not empty success}">
             <div class="alert alert-success">${success}</div>
         </c:if>
