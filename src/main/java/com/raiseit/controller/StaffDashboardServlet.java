@@ -25,10 +25,11 @@ public class StaffDashboardServlet extends HttpServlet {
         try {
             ComplaintDAO complaintDAO = new ComplaintDAO();
             List<Complaint> assignedList = complaintDAO.getComplaintsByStatus("assigned");
+            List<Complaint> escalatedList = complaintDAO.getComplaintsByStatus("escalated");
             List<Complaint> inProgressList = complaintDAO.getComplaintsByStatus("in_progress");
             List<Complaint> resolvedList = complaintDAO.getComplaintsByStatus("resolved");
 
-            request.setAttribute("totalAssigned", assignedList.size());
+            request.setAttribute("totalAssigned", assignedList.size() + escalatedList.size());
             request.setAttribute("inProgress", inProgressList.size());
             request.setAttribute("resolved", resolvedList.size());
 

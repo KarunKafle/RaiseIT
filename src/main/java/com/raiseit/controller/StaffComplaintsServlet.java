@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/staff/complaints")
 public class StaffComplaintsServlet extends HttpServlet {
@@ -22,7 +24,17 @@ public class StaffComplaintsServlet extends HttpServlet {
 
         try {
             ComplaintDAO complaintDAO = new ComplaintDAO();
-            request.setAttribute("complaints", complaintDAO.getComplaintsAssignedToStaff(user.getId()));
+            List<com.raiseit.model.Complaint> complaints = complaintDAO.getComplaintsAssignedToStaff(user.getId());
+            LocalDate today = LocalDate.now();
+            for (com.raiseit.model.Complaint complaint : complaints) {
+                if (complaint.getDeadline() != null) {
+                    LocalDate deadline = complaint.getDeadline().toLocalDate();
+                    boolean isResolvedOrClosed = "resolved".equals(complaint.getStatus()) || "closed".equals(complaint.getStatus());
+                    complaint.setOverdue(!isResolvedOrClosed && today.isAfter(deadline));
+                    complaint.setDueToday(today.isEqual(deadline));
+                }
+            }
+            request.setAttribute("complaints", complaints);
             request.getRequestDispatcher("/WEB-INF/views/staff/complaints.jsp")
                     .forward(request, response);
         } catch (SQLException e) {

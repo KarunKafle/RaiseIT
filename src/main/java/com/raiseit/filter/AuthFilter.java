@@ -66,6 +66,11 @@ public class AuthFilter implements Filter {
             return;
         }
 
+        if (path.startsWith("/thread") && !("admin".equals(role) || "staff".equals(role) || "student".equals(role))) {
+            httpResponse.sendRedirect(redirectTo + "/login");
+            return;
+        }
+
         chain.doFilter(request, response);
     }
 

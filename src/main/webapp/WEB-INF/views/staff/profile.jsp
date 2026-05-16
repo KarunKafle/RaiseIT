@@ -11,12 +11,10 @@
     <div class="sidebar">
         <div class="sidebar-brand">RaiseIT</div>
         <nav>
-            <a href="${pageContext.request.contextPath}/student/search">Search</a>
-            <a href="${pageContext.request.contextPath}/student/dashboard">Dashboard</a>
-            <a href="${pageContext.request.contextPath}/student/complaints">My Complaints</a>
-            <a href="${pageContext.request.contextPath}/student/submit">Submit Complaint</a>
-            <a href="${pageContext.request.contextPath}/faq">FAQ</a>
-            <a href="${pageContext.request.contextPath}/student/profile" class="active">My Profile</a>
+            <a href="${pageContext.request.contextPath}/staff/dashboard">Dashboard</a>
+            <a href="${pageContext.request.contextPath}/staff/complaints">My Assigned</a>
+            <a href="${pageContext.request.contextPath}/staff/history">Response History</a>
+            <a href="${pageContext.request.contextPath}/staff/profile" class="active">My Profile</a>
             <a href="${pageContext.request.contextPath}/logout">Logout</a>
         </nav>
     </div>
@@ -31,21 +29,21 @@
             <div class="alert alert-success">${success}</div>
         </c:if>
         <div class="form-container">
-            <form method="post" action="${pageContext.request.contextPath}/student/profile">
+            <form method="post" action="${pageContext.request.contextPath}/staff/profile">
                 <div class="form-group">
                     <label>Full Name</label>
                     <input type="text" name="fullName" value="${user.fullName}" required>
                 </div>
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" value="${user.email}" disabled>
+                    <input type="email" name="email" value="${user.email}" required>
                 </div>
                 <div class="form-group">
-                    <label>Role</label>
-                    <input type="text" value="${user.role}" disabled>
+                    <label>Current Password</label>
+                    <input type="password" name="currentPassword" placeholder="Enter current password" required>
                 </div>
                 <div class="form-group">
-                    <label>New Password (leave blank to keep current)</label>
+                    <label>New Password (optional)</label>
                     <input type="password" name="newPassword" placeholder="Enter new password">
                 </div>
                 <div class="form-group">

@@ -4,4 +4,99 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <servlet>
+        <servlet-name>AdminDepartmentServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.AdminDepartmentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminDepartmentServlet</servlet-name>
+        <url-pattern>/admin/departments</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminCategoryServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.AdminCategoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminCategoryServlet</servlet-name>
+        <url-pattern>/admin/categories</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ComplaintThreadServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.ComplaintThreadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ComplaintThreadServlet</servlet-name>
+        <url-pattern>/thread</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FeedbackServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.FeedbackServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FeedbackServlet</servlet-name>
+        <url-pattern>/feedback</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminReportServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.AdminReportServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminReportServlet</servlet-name>
+        <url-pattern>/admin/reports</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminContactServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.AdminContactServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminContactServlet</servlet-name>
+        <url-pattern>/admin/contacts</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FaqServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.FaqServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FaqServlet</servlet-name>
+        <url-pattern>/faq</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StaffProfileServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.StaffProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StaffProfileServlet</servlet-name>
+        <url-pattern>/staff/profile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EscalateServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.EscalateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EscalateServlet</servlet-name>
+        <url-pattern>/student/escalate</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StaffHistoryServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.StaffHistoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StaffHistoryServlet</servlet-name>
+        <url-pattern>/staff/history</url-pattern>
+    </servlet-mapping>
+
 </web-app>

@@ -24,10 +24,12 @@ public class ContactServlet extends HttpServlet {
             throws ServletException, IOException {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
         String message = request.getParameter("message");
 
         if (name == null || name.trim().isEmpty() ||
                 email == null || email.trim().isEmpty() ||
+                phone == null || phone.trim().isEmpty() ||
                 message == null || message.trim().isEmpty()) {
             request.setAttribute("error", "All fields are required.");
             request.getRequestDispatcher("/WEB-INF/views/contact.jsp")
@@ -39,6 +41,7 @@ public class ContactServlet extends HttpServlet {
             ContactInquiry inquiry = new ContactInquiry();
             inquiry.setName(name.trim());
             inquiry.setEmail(email.trim());
+            inquiry.setPhone(phone.trim());
             inquiry.setMessage(message.trim());
 
             ContactDAO contactDAO = new ContactDAO();

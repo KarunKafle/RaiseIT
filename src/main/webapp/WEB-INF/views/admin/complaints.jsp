@@ -14,6 +14,10 @@
             <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
             <a href="${pageContext.request.contextPath}/admin/users">Users</a>
             <a href="${pageContext.request.contextPath}/admin/complaints" class="active">Complaints</a>
+            <a href="${pageContext.request.contextPath}/admin/departments">Departments</a>
+            <a href="${pageContext.request.contextPath}/admin/categories">Categories</a>
+            <a href="${pageContext.request.contextPath}/admin/reports">Reports</a>
+            <a href="${pageContext.request.contextPath}/admin/contacts">Contact Inquiries</a>
             <a href="${pageContext.request.contextPath}/logout">Logout</a>
         </nav>
     </div>
@@ -33,6 +37,7 @@
                     <th>Status</th>
                     <th>Date</th>
                     <th>Actions</th>
+                    <th>Thread</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,7 +53,12 @@
                         </td>
                         <td>${complaint.categoryName}</td>
                         <td><span class="badge badge-${complaint.priority}">${complaint.priority}</span></td>
-                        <td><span class="badge badge-${complaint.status}">${complaint.status}</span></td>
+                        <td>
+                            <span class="badge badge-${complaint.status}">${complaint.status}</span>
+                            <c:if test="${complaint.overdue}">
+                                <span class="badge" style="background:#fde8e8;color:#b91c1c;">⚠ Overdue</span>
+                            </c:if>
+                        </td>
                         <td>${complaint.createdAt}</td>
                         <td>
                             <div class="action-stack">
@@ -85,6 +95,9 @@
                                     <button type="submit" class="btn-delete" onclick="return confirm('Delete this complaint?')">Delete</button>
                                 </form>
                             </div>
+                        </td>
+                        <td>
+                            <a class="btn-secondary" href="${pageContext.request.contextPath}/thread?complaintId=${complaint.id}">View Thread</a>
                         </td>
                     </tr>
                 </c:forEach>

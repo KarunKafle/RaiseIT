@@ -12,10 +12,11 @@ public class ComplaintDAO {
     public List<Complaint> getAllComplaints() throws SQLException {
         List<Complaint> complaints = new ArrayList<>();
         String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
-                "u.full_name as student_name FROM complaints c " +
+                "u.full_name as student_name, a.deadline as deadline FROM complaints c " +
                 "JOIN categories cat ON c.category_id = cat.id " +
                 "JOIN departments d ON cat.department_id = d.id " +
                 "LEFT JOIN users u ON c.user_id = u.id " +
+                "LEFT JOIN assignments a ON c.id = a.complaint_id " +
                 "ORDER BY c.created_at DESC";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -94,6 +95,18 @@ public class ComplaintDAO {
         return null;
     }
 
+    public boolean isComplaintAssignedToStaff(int complaintId, int staffId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM assignments WHERE complaint_id = ? AND staff_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, complaintId);
+            ps.setInt(2, staffId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return rs.getInt(1) > 0;
+        }
+        return false;
+    }
+
     private Complaint mapRow(ResultSet rs) throws SQLException {
         Complaint c = new Complaint();
         c.setId(rs.getInt("id"));
@@ -109,6 +122,11 @@ public class ComplaintDAO {
         c.setCategoryName(rs.getString("category_name"));
         c.setDepartmentName(rs.getString("department_name"));
         c.setStudentName(rs.getString("student_name"));
+        try {
+            c.setDeadline(rs.getDate("deadline"));
+        } catch (SQLException ignored) {
+            c.setDeadline(null);
+        }
         return c;
     }
 
@@ -235,12 +253,12 @@ public class ComplaintDAO {
     public List<Complaint> getComplaintsAssignedToStaff(int staffId) throws SQLException {
         List<Complaint> complaints = new ArrayList<>();
         String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
-                "u.full_name as student_name FROM complaints c " +
+                "u.full_name as student_name, a.deadline as deadline FROM complaints c " +
                 "JOIN categories cat ON c.category_id = cat.id " +
                 "JOIN departments d ON cat.department_id = d.id " +
                 "LEFT JOIN users u ON c.user_id = u.id " +
                 "JOIN assignments a ON c.id = a.complaint_id " +
-                "WHERE a.staff_id = ? AND c.status IN ('assigned', 'in_progress') " +
+                "WHERE a.staff_id = ? AND c.status IN ('assigned', 'in_progress', 'escalated') " +
                 "ORDER BY c.created_at DESC";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -251,5 +269,57 @@ public class ComplaintDAO {
             }
         }
         return complaints;
+    }
+
+    public List<Complaint> getResolvedComplaintsByStaffWithMessageCount(int staffId) throws SQLException {
+        List<Complaint> complaints = new ArrayList<>();
+        String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
+                "u.full_name as student_name, COUNT(r.id) as message_count " +
+                "FROM complaints c " +
+                "JOIN assignments a ON c.id = a.complaint_id " +
+                "JOIN categories cat ON c.category_id = cat.id " +
+                "JOIN departments d ON cat.department_id = d.id " +
+                "LEFT JOIN users u ON c.user_id = u.id " +
+                "LEFT JOIN responses r ON r.complaint_id = c.id " +
+                "WHERE a.staff_id = ? AND c.status IN ('resolved', 'closed') " +
+                "GROUP BY c.id " +
+                "ORDER BY c.created_at DESC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, staffId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Complaint complaint = mapRow(rs);
+                complaint.setMessageCount(rs.getInt("message_count"));
+                complaints.add(complaint);
+            }
+        }
+        return complaints;
+    }
+
+    public List<com.raiseit.model.StatItem> getComplaintCountsByStatus() throws SQLException {
+        List<com.raiseit.model.StatItem> items = new ArrayList<>();
+        String sql = "SELECT status, COUNT(*) as total FROM complaints GROUP BY status ORDER BY total DESC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                items.add(new com.raiseit.model.StatItem(rs.getString("status"), rs.getInt("total")));
+            }
+        }
+        return items;
+    }
+
+    public List<com.raiseit.model.StatItem> getComplaintCountsByPriority() throws SQLException {
+        List<com.raiseit.model.StatItem> items = new ArrayList<>();
+        String sql = "SELECT priority, COUNT(*) as total FROM complaints GROUP BY priority ORDER BY total DESC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                items.add(new com.raiseit.model.StatItem(rs.getString("priority"), rs.getInt("total")));
+            }
+        }
+        return items;
     }
 }

@@ -13,6 +13,8 @@
         <nav>
             <a href="${pageContext.request.contextPath}/staff/dashboard">Dashboard</a>
             <a href="${pageContext.request.contextPath}/staff/complaints" class="active">My Assigned</a>
+            <a href="${pageContext.request.contextPath}/staff/history">Response History</a>
+            <a href="${pageContext.request.contextPath}/staff/profile">My Profile</a>
             <a href="${pageContext.request.contextPath}/logout">Logout</a>
         </nav>
     </div>
@@ -30,14 +32,16 @@
                     <th>Category</th>
                     <th>Priority</th>
                     <th>Status</th>
+                    <th>Deadline</th>
                     <th>Actions</th>
+                    <th>Thread</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:choose>
                     <c:when test="${empty complaints}">
                         <tr>
-                            <td colspan="7" style="text-align:center;">No complaints assigned yet.</td>
+                            <td colspan="9" style="text-align:center;">No complaints assigned yet.</td>
                         </tr>
                     </c:when>
                     <c:otherwise>
@@ -55,20 +59,48 @@
                                 <td><span class="badge badge-${complaint.priority}">${complaint.priority}</span></td>
                                 <td><span class="badge badge-${complaint.status}">${complaint.status}</span></td>
                                 <td>
-                                    <c:if test="${complaint.status == 'assigned'}">
-                                        <form method="post" action="${pageContext.request.contextPath}/staff/complaints" style="display:inline">
-                                            <input type="hidden" name="complaintId" value="${complaint.id}">
-                                            <input type="hidden" name="action" value="inprogress">
-                                            <button type="submit" class="btn-approve">Start</button>
-                                        </form>
-                                    </c:if>
-                                    <c:if test="${complaint.status == 'in_progress'}">
-                                        <form method="post" action="${pageContext.request.contextPath}/staff/complaints" style="display:inline">
-                                            <input type="hidden" name="complaintId" value="${complaint.id}">
-                                            <input type="hidden" name="action" value="resolve">
-                                            <button type="submit" class="btn-approve">Resolve</button>
-                                        </form>
-                                    </c:if>
+                                    <c:choose>
+                                        <c:when test="${complaint.deadline != null}">
+                                            <c:choose>
+                                                <c:when test="${complaint.overdue}">
+                                                    <span style="color:#b91c1c;">${complaint.deadline} ⚠ Overdue</span>
+                                                </c:when>
+                                                <c:when test="${complaint.dueToday}">
+                                                    <span style="color:#c2410c;">${complaint.deadline} Due Today</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${complaint.deadline}
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:when>
+                                        <c:otherwise>
+                                            -
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${complaint.status == 'assigned'}">
+                                            <form method="post" action="${pageContext.request.contextPath}/staff/update" style="display:inline">
+                                                <input type="hidden" name="complaintId" value="${complaint.id}">
+                                                <input type="hidden" name="newStatus" value="in_progress">
+                                                <button type="submit" class="btn-approve">Mark In Progress</button>
+                                            </form>
+                                        </c:when>
+                                        <c:when test="${complaint.status == 'in_progress' || complaint.status == 'escalated'}">
+                                            <form method="post" action="${pageContext.request.contextPath}/staff/update" style="display:inline">
+                                                <input type="hidden" name="complaintId" value="${complaint.id}">
+                                                <input type="hidden" name="newStatus" value="resolved">
+                                                <button type="submit" class="btn-approve">Mark Resolved</button>
+                                            </form>
+                                        </c:when>
+                                        <c:when test="${complaint.status == 'resolved'}">
+                                            <span style="color:#888;">Resolved ✓</span>
+                                        </c:when>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <a class="btn-secondary" href="${pageContext.request.contextPath}/thread?complaintId=${complaint.id}">View Thread</a>
                                 </td>
                             </tr>
                         </c:forEach>

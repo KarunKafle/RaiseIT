@@ -13,6 +13,7 @@
         <nav>
             <a href="${pageContext.request.contextPath}/about">About</a>
             <a href="${pageContext.request.contextPath}/contact" class="active">Contact</a>
+            <a href="${pageContext.request.contextPath}/faq">FAQ</a>
             <a href="${pageContext.request.contextPath}/login">Login</a>
         </nav>
     </div>
@@ -36,6 +37,10 @@
                 <div class="form-group">
                     <label>Email Address</label>
                     <input type="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" name="phone" placeholder="Enter your phone number" required>
                 </div>
                 <div class="form-group">
                     <label>Message</label>

@@ -17,6 +17,10 @@
       <a href="${pageContext.request.contextPath}/admin/dashboard" class="active">Dashboard</a>
       <a href="${pageContext.request.contextPath}/admin/users">Manage Users</a>
       <a href="${pageContext.request.contextPath}/admin/complaints">Manage Complaints</a>
+      <a href="${pageContext.request.contextPath}/admin/departments">Manage Departments</a>
+      <a href="${pageContext.request.contextPath}/admin/categories">Manage Categories</a>
+      <a href="${pageContext.request.contextPath}/admin/reports">Reports</a>
+      <a href="${pageContext.request.contextPath}/admin/contacts">Contact Inquiries</a>
       <a href="${pageContext.request.contextPath}/logout">Logout</a>
     </nav>
   </div>
