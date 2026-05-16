@@ -81,4 +81,13 @@
         <url-pattern>/staff/profile</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>EscalateServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.EscalateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EscalateServlet</servlet-name>
+        <url-pattern>/student/escalate</url-pattern>
+    </servlet-mapping>
+
 </web-app>
