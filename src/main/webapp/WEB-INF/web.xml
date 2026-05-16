@@ -72,4 +72,13 @@
         <url-pattern>/faq</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>StaffProfileServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.StaffProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StaffProfileServlet</servlet-name>
+        <url-pattern>/staff/profile</url-pattern>
+    </servlet-mapping>
+
 </web-app>

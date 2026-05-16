@@ -13,6 +13,7 @@
         <nav>
             <a href="${pageContext.request.contextPath}/staff/dashboard" class="active">Dashboard</a>
             <a href="${pageContext.request.contextPath}/staff/complaints">My Assigned</a>
+            <a href="${pageContext.request.contextPath}/staff/profile">My Profile</a>
             <a href="${pageContext.request.contextPath}/logout">Logout</a>
         </nav>
     </div>

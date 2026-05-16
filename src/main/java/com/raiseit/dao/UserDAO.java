@@ -119,6 +119,38 @@ public class UserDAO {
             return ps.executeUpdate() > 0;
         }
     }
+
+    public boolean updateUserWithEmail(User user) throws SQLException {
+        String sql = "UPDATE users SET full_name = ?, email = ?, password = ? WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getFullName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.setInt(4, user.getId());
+            return ps.executeUpdate() > 0;
+        }
+    }
+
+    public User getUserById(int id) throws SQLException {
+        String sql = "SELECT * FROM users WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setFullName(rs.getString("full_name"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setRole(rs.getString("role"));
+                user.setStatus(rs.getString("status"));
+                return user;
+            }
+        }
+        return null;
+    }
     public List<User> getStaffUsers() throws SQLException {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM users WHERE role = 'staff' AND status = 'active'";
