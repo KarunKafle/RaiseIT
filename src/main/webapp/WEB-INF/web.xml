@@ -99,4 +99,18 @@
         <url-pattern>/staff/history</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>StaffUpdateServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.StaffUpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StaffUpdateServlet</servlet-name>
+        <url-pattern>/staff/update</url-pattern>
+    </servlet-mapping>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.jsp</location>
+    </error-page>
+
 </web-app>
