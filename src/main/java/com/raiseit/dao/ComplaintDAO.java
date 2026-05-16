@@ -265,6 +265,32 @@ public class ComplaintDAO {
         return complaints;
     }
 
+    public List<Complaint> getResolvedComplaintsByStaffWithMessageCount(int staffId) throws SQLException {
+        List<Complaint> complaints = new ArrayList<>();
+        String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
+                "u.full_name as student_name, COUNT(r.id) as message_count " +
+                "FROM complaints c " +
+                "JOIN assignments a ON c.id = a.complaint_id " +
+                "JOIN categories cat ON c.category_id = cat.id " +
+                "JOIN departments d ON cat.department_id = d.id " +
+                "LEFT JOIN users u ON c.user_id = u.id " +
+                "LEFT JOIN responses r ON r.complaint_id = c.id " +
+                "WHERE a.staff_id = ? AND c.status IN ('resolved', 'closed') " +
+                "GROUP BY c.id " +
+                "ORDER BY c.created_at DESC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, staffId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Complaint complaint = mapRow(rs);
+                complaint.setMessageCount(rs.getInt("message_count"));
+                complaints.add(complaint);
+            }
+        }
+        return complaints;
+    }
+
     public List<com.raiseit.model.StatItem> getComplaintCountsByStatus() throws SQLException {
         List<com.raiseit.model.StatItem> items = new ArrayList<>();
         String sql = "SELECT status, COUNT(*) as total FROM complaints GROUP BY status ORDER BY total DESC";

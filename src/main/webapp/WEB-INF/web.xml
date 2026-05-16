@@ -90,4 +90,13 @@
         <url-pattern>/student/escalate</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>StaffHistoryServlet</servlet-name>
+        <servlet-class>com.raiseit.controller.StaffHistoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StaffHistoryServlet</servlet-name>
+        <url-pattern>/staff/history</url-pattern>
+    </servlet-mapping>
+
 </web-app>

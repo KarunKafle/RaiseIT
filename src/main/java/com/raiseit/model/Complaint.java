@@ -17,6 +17,7 @@ public class Complaint {
     private String categoryName;
     private String departmentName;
     private String studentName;
+    private int messageCount;
 
     public Complaint() {}
 
@@ -61,4 +62,7 @@ public class Complaint {
 
     public String getStudentName() { return studentName; }
     public void setStudentName(String studentName) { this.studentName = studentName; }
+
+    public int getMessageCount() { return messageCount; }
+    public void setMessageCount(int messageCount) { this.messageCount = messageCount; }
 }
