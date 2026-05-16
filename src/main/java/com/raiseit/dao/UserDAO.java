@@ -101,11 +101,45 @@ public class UserDAO {
     }
 
     public boolean deleteUser(int userId) throws SQLException {
-        String sql = "DELETE FROM users WHERE id = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, userId);
-            return ps.executeUpdate() > 0;
+        String deleteAssignments = "DELETE FROM assignments WHERE staff_id = ?";
+        String deleteResponses = "DELETE FROM responses WHERE user_id = ?";
+        String deleteFeedback = "DELETE FROM feedback WHERE student_id = ?";
+        String nullComplaints = "UPDATE complaints SET user_id = NULL WHERE user_id = ?";
+        String deleteUser = "DELETE FROM users WHERE id = ?";
+
+        try (Connection conn = DBConnection.getConnection()) {
+            boolean oldAutoCommit = conn.getAutoCommit();
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement psAssignments = conn.prepareStatement(deleteAssignments);
+                 PreparedStatement psResponses = conn.prepareStatement(deleteResponses);
+                 PreparedStatement psFeedback = conn.prepareStatement(deleteFeedback);
+                 PreparedStatement psComplaints = conn.prepareStatement(nullComplaints);
+                 PreparedStatement psUser = conn.prepareStatement(deleteUser)) {
+
+                psAssignments.setInt(1, userId);
+                psAssignments.executeUpdate();
+
+                psResponses.setInt(1, userId);
+                psResponses.executeUpdate();
+
+                psFeedback.setInt(1, userId);
+                psFeedback.executeUpdate();
+
+                psComplaints.setInt(1, userId);
+                psComplaints.executeUpdate();
+
+                psUser.setInt(1, userId);
+                boolean deleted = psUser.executeUpdate() > 0;
+
+                conn.commit();
+                return deleted;
+            } catch (SQLException e) {
+                conn.rollback();
+                throw e;
+            } finally {
+                conn.setAutoCommit(oldAutoCommit);
+            }
         }
     }
 
