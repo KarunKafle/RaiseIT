@@ -12,10 +12,11 @@ public class ComplaintDAO {
     public List<Complaint> getAllComplaints() throws SQLException {
         List<Complaint> complaints = new ArrayList<>();
         String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
-                "u.full_name as student_name FROM complaints c " +
+                "u.full_name as student_name, a.deadline as deadline FROM complaints c " +
                 "JOIN categories cat ON c.category_id = cat.id " +
                 "JOIN departments d ON cat.department_id = d.id " +
                 "LEFT JOIN users u ON c.user_id = u.id " +
+                "LEFT JOIN assignments a ON c.id = a.complaint_id " +
                 "ORDER BY c.created_at DESC";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -121,6 +122,11 @@ public class ComplaintDAO {
         c.setCategoryName(rs.getString("category_name"));
         c.setDepartmentName(rs.getString("department_name"));
         c.setStudentName(rs.getString("student_name"));
+        try {
+            c.setDeadline(rs.getDate("deadline"));
+        } catch (SQLException ignored) {
+            c.setDeadline(null);
+        }
         return c;
     }
 
@@ -247,7 +253,7 @@ public class ComplaintDAO {
     public List<Complaint> getComplaintsAssignedToStaff(int staffId) throws SQLException {
         List<Complaint> complaints = new ArrayList<>();
         String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
-                "u.full_name as student_name FROM complaints c " +
+                "u.full_name as student_name, a.deadline as deadline FROM complaints c " +
                 "JOIN categories cat ON c.category_id = cat.id " +
                 "JOIN departments d ON cat.department_id = d.id " +
                 "LEFT JOIN users u ON c.user_id = u.id " +

@@ -1,5 +1,6 @@
 package com.raiseit.model;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Complaint {
@@ -18,6 +19,9 @@ public class Complaint {
     private String departmentName;
     private String studentName;
     private int messageCount;
+    private Date deadline;
+    private boolean overdue;
+    private boolean dueToday;
 
     public Complaint() {}
 
@@ -65,4 +69,13 @@ public class Complaint {
 
     public int getMessageCount() { return messageCount; }
     public void setMessageCount(int messageCount) { this.messageCount = messageCount; }
+
+    public Date getDeadline() { return deadline; }
+    public void setDeadline(Date deadline) { this.deadline = deadline; }
+
+    public boolean isOverdue() { return overdue; }
+    public void setOverdue(boolean overdue) { this.overdue = overdue; }
+
+    public boolean isDueToday() { return dueToday; }
+    public void setDueToday(boolean dueToday) { this.dueToday = dueToday; }
 }

@@ -55,6 +55,9 @@
                         <td><span class="badge badge-${complaint.priority}">${complaint.priority}</span></td>
                         <td>
                             <span class="badge badge-${complaint.status}">${complaint.status}</span>
+                            <c:if test="${complaint.overdue}">
+                                <span class="badge" style="background:#fde8e8;color:#b91c1c;">⚠ Overdue</span>
+                            </c:if>
                         </td>
                         <td>${complaint.createdAt}</td>
                         <td>

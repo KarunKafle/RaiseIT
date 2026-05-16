@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -22,6 +23,15 @@ public class AdminComplaintServlet extends HttpServlet {
             ComplaintDAO complaintDAO = new ComplaintDAO();
             UserDAO userDAO = new UserDAO();
             List<Complaint> complaints = complaintDAO.getAllComplaints();
+            LocalDate today = LocalDate.now();
+            for (Complaint complaint : complaints) {
+                if (complaint.getDeadline() != null) {
+                    LocalDate deadline = complaint.getDeadline().toLocalDate();
+                    boolean isResolvedOrClosed = "resolved".equals(complaint.getStatus()) || "closed".equals(complaint.getStatus());
+                    complaint.setOverdue(!isResolvedOrClosed && today.isAfter(deadline));
+                    complaint.setDueToday(today.isEqual(deadline));
+                }
+            }
             request.setAttribute("complaints", complaints);
             request.setAttribute("staffList", userDAO.getStaffUsers());
             request.getRequestDispatcher("/WEB-INF/views/admin/complaints.jsp")
