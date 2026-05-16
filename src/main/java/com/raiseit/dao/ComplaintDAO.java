@@ -252,7 +252,7 @@ public class ComplaintDAO {
                 "JOIN departments d ON cat.department_id = d.id " +
                 "LEFT JOIN users u ON c.user_id = u.id " +
                 "JOIN assignments a ON c.id = a.complaint_id " +
-                "WHERE a.staff_id = ? AND c.status IN ('assigned', 'in_progress') " +
+                "WHERE a.staff_id = ? AND c.status IN ('assigned', 'in_progress', 'escalated') " +
                 "ORDER BY c.created_at DESC";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -263,5 +263,31 @@ public class ComplaintDAO {
             }
         }
         return complaints;
+    }
+
+    public List<com.raiseit.model.StatItem> getComplaintCountsByStatus() throws SQLException {
+        List<com.raiseit.model.StatItem> items = new ArrayList<>();
+        String sql = "SELECT status, COUNT(*) as total FROM complaints GROUP BY status ORDER BY total DESC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                items.add(new com.raiseit.model.StatItem(rs.getString("status"), rs.getInt("total")));
+            }
+        }
+        return items;
+    }
+
+    public List<com.raiseit.model.StatItem> getComplaintCountsByPriority() throws SQLException {
+        List<com.raiseit.model.StatItem> items = new ArrayList<>();
+        String sql = "SELECT priority, COUNT(*) as total FROM complaints GROUP BY priority ORDER BY total DESC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                items.add(new com.raiseit.model.StatItem(rs.getString("priority"), rs.getInt("total")));
+            }
+        }
+        return items;
     }
 }

@@ -55,9 +55,6 @@
                         <td><span class="badge badge-${complaint.priority}">${complaint.priority}</span></td>
                         <td>
                             <span class="badge badge-${complaint.status}">${complaint.status}</span>
-                            <c:if test="${complaint.status == 'escalated'}">
-                                <span class="badge badge-escalated">Escalated</span>
-                            </c:if>
                         </td>
                         <td>${complaint.createdAt}</td>
                         <td>
