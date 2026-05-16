@@ -1,6 +1,7 @@
 package com.raiseit.model;
 
 import java.sql.Timestamp;
+// Model class representing a registered user
 
 public class User {
     private int id;
