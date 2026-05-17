@@ -22,11 +22,12 @@
     </div>
     <div class="main-content">
         <div class="page-header">
+            <button class="sidebar-toggle" type="button" onclick="document.querySelector('.sidebar').classList.toggle('is-open')">☰</button>
             <h1>Search Complaints</h1>
         </div>
         <div class="form-container">
             <form method="get" action="${pageContext.request.contextPath}/student/search">
-                <div class="form-group" style="display:flex; gap:10px;">
+                <div class="form-group form-group-inline" style="display:flex; gap:10px;">
                     <input type="text" name="keyword" value="${keyword}"
                            placeholder="Search by title, reference number or keyword"
                            style="flex:1;">

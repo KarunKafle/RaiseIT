@@ -22,6 +22,7 @@
     </div>
     <div class="main-content">
         <div class="page-header">
+            <button class="sidebar-toggle" type="button" onclick="document.querySelector('.sidebar').classList.toggle('is-open')">☰</button>
             <h1>My Complaints</h1>
             <a href="${pageContext.request.contextPath}/student/submit" class="btn-primary">Submit New</a>
         </div>

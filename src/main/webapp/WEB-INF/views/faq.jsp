@@ -67,6 +67,7 @@
     </div>
     <div class="main-content">
         <div class="page-header">
+            <button class="sidebar-toggle" type="button" onclick="document.querySelector('.sidebar').classList.toggle('is-open')">☰</button>
             <h1>Frequently Asked Questions</h1>
         </div>
 
