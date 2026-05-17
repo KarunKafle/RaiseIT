@@ -11,6 +11,7 @@
 </head>
 <body>
 <div class="dashboard-container">
+  <button class="hamburger-btn" type="button" onclick="document.body.classList.toggle('sidebar-open')">☰ Menu</button>
   <div class="sidebar">
     <div class="sidebar-brand">RaiseIT</div>
     <nav>
@@ -26,7 +27,6 @@
   </div>
   <div class="main-content">
     <div class="page-header">
-      <button class="sidebar-toggle" type="button" onclick="document.querySelector('.sidebar').classList.toggle('is-open')">☰</button>
       <h1>Welcome, <%= session.getAttribute("userFullName") %></h1>
     </div>
     <div class="stats-grid">

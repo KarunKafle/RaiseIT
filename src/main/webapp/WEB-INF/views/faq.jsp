@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ - RaiseIT</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <style>
@@ -45,6 +46,7 @@
 </head>
 <body>
 <div class="dashboard-container">
+    <button class="hamburger-btn" type="button" onclick="document.body.classList.toggle('sidebar-open')">☰ Menu</button>
     <div class="sidebar">
         <div class="sidebar-brand">RaiseIT</div>
         <nav>
@@ -67,7 +69,6 @@
     </div>
     <div class="main-content">
         <div class="page-header">
-            <button class="sidebar-toggle" type="button" onclick="document.querySelector('.sidebar').classList.toggle('is-open')">☰</button>
             <h1>Frequently Asked Questions</h1>
         </div>
 

@@ -98,6 +98,10 @@ body {
     flex-direction: column;
 }
 
+.hamburger-btn {
+    display: none;
+}
+
 .sidebar-brand {
     padding: 24px;
     font-size: 1.5rem;
@@ -580,23 +584,25 @@ body {
     }
 
     .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 260px;
-        transform: translateX(-100%);
-        transition: transform 0.2s ease;
-        z-index: 1000;
-        overflow-y: auto;
+        display: none;
+        width: 100%;
     }
 
-    .sidebar.is-open {
-        transform: translateX(0);
+    .hamburger-btn {
+        display: block;
+        width: 100%;
+        background: #1e1b4b;
+        color: white;
+        border: none;
+        padding: 14px 16px;
+        font-size: 1.1rem;
+        text-align: left;
+        cursor: pointer;
+        font-family: inherit;
     }
 
-    .sidebar-toggle {
-        display: inline-flex;
+    body.sidebar-open .sidebar {
+        display: flex;
     }
 
     .page-header {
