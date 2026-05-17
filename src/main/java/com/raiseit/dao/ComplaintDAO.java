@@ -7,8 +7,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles database operations for complaint records in RaiseIT.
+ * It reads, writes, and updates complaint data and related stats.
+ */
 public class ComplaintDAO {
 
+    /**
+     * Gets all complaints with related category, department, and user info.
+     * @return a list of all complaints
+     * @throws SQLException if a database error occurs
+     */
     public List<Complaint> getAllComplaints() throws SQLException {
         List<Complaint> complaints = new ArrayList<>();
         String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
@@ -28,6 +37,11 @@ public class ComplaintDAO {
         return complaints;
     }
 
+    /**
+     * Counts all complaints in the system.
+     * @return the total number of complaints
+     * @throws SQLException if a database error occurs
+     */
     public int getTotalComplaints() throws SQLException {
         String sql = "SELECT COUNT(*) FROM complaints";
         try (Connection conn = DBConnection.getConnection();
@@ -38,6 +52,12 @@ public class ComplaintDAO {
         return 0;
     }
 
+    /**
+     * Counts complaints that match a given status.
+     * @param status the status to count
+     * @return the number of complaints with that status
+     * @throws SQLException if a database error occurs
+     */
     public int countComplaintsByStatus(String status) throws SQLException {
         String sql = "SELECT COUNT(*) FROM complaints WHERE status = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -49,6 +69,13 @@ public class ComplaintDAO {
         return 0;
     }
 
+    /**
+     * Updates the status of a complaint.
+     * @param complaintId the complaint id to update
+     * @param status the new status value
+     * @return true if the update worked, false otherwise
+     * @throws SQLException if a database error occurs
+     */
     public boolean updateComplaintStatus(int complaintId, String status) throws SQLException {
         String sql = "UPDATE complaints SET status = ? WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -59,6 +86,12 @@ public class ComplaintDAO {
         }
     }
 
+    /**
+     * Deletes a complaint and any related assignment record.
+     * @param complaintId the complaint id to delete
+     * @return true if the delete completed, false otherwise
+     * @throws SQLException if a database error occurs
+     */
     public boolean deleteComplaint(int complaintId) throws SQLException {
         String sql1 = "DELETE FROM assignments WHERE complaint_id = ?";
         String sql2 = "DELETE FROM complaints WHERE id = ?";
@@ -79,6 +112,12 @@ public class ComplaintDAO {
         }
     }
 
+    /**
+     * Finds a single complaint by id with related names.
+     * @param id the complaint id to look up
+     * @return the complaint if found, or null
+     * @throws SQLException if a database error occurs
+     */
     public Complaint getComplaintById(int id) throws SQLException {
         String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
                 "u.full_name as student_name FROM complaints c " +
@@ -95,6 +134,13 @@ public class ComplaintDAO {
         return null;
     }
 
+    /**
+     * Checks if a complaint is assigned to a specific staff user.
+     * @param complaintId the complaint id to check
+     * @param staffId the staff user id to check
+     * @return true if the assignment exists, false otherwise
+     * @throws SQLException if a database error occurs
+     */
     public boolean isComplaintAssignedToStaff(int complaintId, int staffId) throws SQLException {
         String sql = "SELECT COUNT(*) FROM assignments WHERE complaint_id = ? AND staff_id = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -107,6 +153,12 @@ public class ComplaintDAO {
         return false;
     }
 
+    /**
+     * Converts a result set row into a Complaint object.
+     * @param rs the result set positioned on a row
+     * @return a populated Complaint object
+     * @throws SQLException if reading the row fails
+     */
     private Complaint mapRow(ResultSet rs) throws SQLException {
         Complaint c = new Complaint();
         c.setId(rs.getInt("id"));
@@ -130,6 +182,12 @@ public class ComplaintDAO {
         return c;
     }
 
+    /**
+     * Gets all complaints submitted by one user.
+     * @param userId the user id to filter by
+     * @return a list of that user's complaints
+     * @throws SQLException if a database error occurs
+     */
     public List<Complaint> getComplaintsByUserId(int userId) throws SQLException {
         List<Complaint> complaints = new ArrayList<>();
         String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
@@ -149,6 +207,13 @@ public class ComplaintDAO {
         return complaints;
     }
 
+    /**
+     * Gets complaints for a user that match a status.
+     * @param userId the user id to filter by
+     * @param status the status to filter by
+     * @return a list of matching complaints
+     * @throws SQLException if a database error occurs
+     */
     public List<Complaint> getComplaintsByUserIdAndStatus(int userId, String status) throws SQLException {
         List<Complaint> complaints = new ArrayList<>();
         String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
@@ -169,6 +234,12 @@ public class ComplaintDAO {
         return complaints;
     }
 
+    /**
+     * Saves a new complaint and returns its reference number.
+     * @param complaint the complaint data to save
+     * @return the generated reference number
+     * @throws SQLException if a database error occurs
+     */
     public String submitComplaint(Complaint complaint) throws SQLException {
         String refNumber = "RIT2026-" + String.format("%05d", (int)(Math.random() * 99999));
         String sql = "INSERT INTO complaints (reference_number, user_id, title, description, category_id, priority, status, is_anonymous) " +
@@ -187,6 +258,13 @@ public class ComplaintDAO {
         return refNumber;
     }
 
+    /**
+     * Searches a user's complaints by title, reference, or description.
+     * @param userId the user id to filter by
+     * @param keyword the search keyword
+     * @return a list of matching complaints
+     * @throws SQLException if a database error occurs
+     */
     public List<Complaint> searchComplaints(int userId, String keyword) throws SQLException {
         List<Complaint> complaints = new ArrayList<>();
         String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
@@ -210,6 +288,12 @@ public class ComplaintDAO {
         return complaints;
     }
 
+    /**
+     * Gets all complaints that match a status.
+     * @param status the status to filter by
+     * @return a list of complaints with that status
+     * @throws SQLException if a database error occurs
+     */
     public List<Complaint> getComplaintsByStatus(String status) throws SQLException {
         List<Complaint> complaints = new ArrayList<>();
         String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
@@ -229,6 +313,13 @@ public class ComplaintDAO {
         return complaints;
     }
 
+    /**
+     * Assigns a complaint to a staff user and sets a deadline.
+     * @param complaintId the complaint id to assign
+     * @param staffId the staff user id
+     * @return true if the assignment worked, false otherwise
+     * @throws SQLException if a database error occurs
+     */
     public boolean assignComplaintToStaff(int complaintId, int staffId) throws SQLException {
         String sql1 = "UPDATE complaints SET status = 'assigned' WHERE id = ?";
         String sql2 = "INSERT INTO assignments (complaint_id, staff_id, deadline) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 7 DAY))";
@@ -250,6 +341,12 @@ public class ComplaintDAO {
         }
     }
 
+    /**
+     * Gets active complaints assigned to a staff user.
+     * @param staffId the staff user id
+     * @return a list of assigned complaints
+     * @throws SQLException if a database error occurs
+     */
     public List<Complaint> getComplaintsAssignedToStaff(int staffId) throws SQLException {
         List<Complaint> complaints = new ArrayList<>();
         String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
@@ -271,6 +368,12 @@ public class ComplaintDAO {
         return complaints;
     }
 
+    /**
+     * Gets resolved or closed complaints with message counts for a staff user.
+     * @param staffId the staff user id
+     * @return a list of resolved complaints and message totals
+     * @throws SQLException if a database error occurs
+     */
     public List<Complaint> getResolvedComplaintsByStaffWithMessageCount(int staffId) throws SQLException {
         List<Complaint> complaints = new ArrayList<>();
         String sql = "SELECT c.*, cat.name as category_name, d.name as department_name, " +
@@ -297,6 +400,11 @@ public class ComplaintDAO {
         return complaints;
     }
 
+    /**
+     * Counts complaints grouped by status.
+     * @return a list of status totals
+     * @throws SQLException if a database error occurs
+     */
     public List<com.raiseit.model.StatItem> getComplaintCountsByStatus() throws SQLException {
         List<com.raiseit.model.StatItem> items = new ArrayList<>();
         String sql = "SELECT status, COUNT(*) as total FROM complaints GROUP BY status ORDER BY total DESC";
@@ -310,6 +418,11 @@ public class ComplaintDAO {
         return items;
     }
 
+    /**
+     * Counts complaints grouped by priority.
+     * @return a list of priority totals
+     * @throws SQLException if a database error occurs
+     */
     public List<com.raiseit.model.StatItem> getComplaintCountsByPriority() throws SQLException {
         List<com.raiseit.model.StatItem> items = new ArrayList<>();
         String sql = "SELECT priority, COUNT(*) as total FROM complaints GROUP BY priority ORDER BY total DESC";

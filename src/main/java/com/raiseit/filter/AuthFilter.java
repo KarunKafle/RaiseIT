@@ -12,11 +12,28 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Checks requests to make sure users are logged in before viewing
+ * protected pages, and redirects to login if needed.
+ */
 @WebFilter("/*")
 public class AuthFilter implements Filter {
 
+    /**
+     * Initializes the filter when the server starts.
+     * @param filterConfig the filter configuration
+     * @throws ServletException if the filter cannot be initialized
+     */
     public void init(FilterConfig filterConfig) throws ServletException {}
 
+    /**
+     * Allows public pages through and checks session roles for protected paths.
+     * @param request the incoming servlet request
+     * @param response the outgoing servlet response
+     * @param chain the filter chain to continue processing
+     * @throws IOException if a redirect or response fails
+     * @throws ServletException if the next filter or servlet fails
+     */
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
@@ -74,5 +91,8 @@ public class AuthFilter implements Filter {
         chain.doFilter(request, response);
     }
 
+    /**
+     * Cleans up filter resources when the server shuts down.
+     */
     public void destroy() {}
 }

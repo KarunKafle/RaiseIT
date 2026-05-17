@@ -5,8 +5,18 @@ import com.raiseit.util.DBConnection;
 
 import java.sql.*;
 
+/**
+ * Handles database operations for feedback linked to complaints.
+ * It reads and writes feedback records.
+ */
 public class FeedbackDAO {
 
+    /**
+     * Finds feedback for a complaint by its id.
+     * @param complaintId the complaint id to search for
+     * @return the feedback if found, or null
+     * @throws SQLException if a database error occurs
+     */
     public Feedback getFeedbackByComplaintId(int complaintId) throws SQLException {
         String sql = "SELECT f.*, u.full_name FROM feedback f JOIN users u ON f.student_id = u.id WHERE f.complaint_id = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -28,6 +38,12 @@ public class FeedbackDAO {
         return null;
     }
 
+    /**
+     * Saves a new feedback record for a complaint.
+     * @param feedback the feedback data to save
+     * @return true if the insert worked, false otherwise
+     * @throws SQLException if a database error occurs
+     */
     public boolean addFeedback(Feedback feedback) throws SQLException {
         String sql = "INSERT INTO feedback (complaint_id, student_id, rating, comment) VALUES (?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();

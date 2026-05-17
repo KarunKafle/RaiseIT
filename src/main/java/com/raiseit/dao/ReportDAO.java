@@ -7,8 +7,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Builds summary counts for reports and dashboard charts.
+ * It groups complaint data into simple totals.
+ */
 public class ReportDAO {
 
+    /**
+     * Counts complaints grouped by department.
+     * @return a list of department totals
+     * @throws SQLException if a database error occurs
+     */
     public List<StatItem> getComplaintCountsByDepartment() throws SQLException {
         List<StatItem> items = new ArrayList<>();
         String sql = "SELECT d.name as label, COUNT(c.id) as total " +
@@ -27,6 +36,11 @@ public class ReportDAO {
         return items;
     }
 
+    /**
+     * Counts resolved or closed complaints per staff member.
+     * @return a list of staff totals, limited to the top five
+     * @throws SQLException if a database error occurs
+     */
     public List<StatItem> getResolvedCountsByStaff() throws SQLException {
         List<StatItem> items = new ArrayList<>();
         String sql = "SELECT u.full_name as label, COUNT(c.id) as count " +

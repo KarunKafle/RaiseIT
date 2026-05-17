@@ -14,14 +14,32 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Handles login requests for the RaiseIT web app.
+ * It shows the login page and processes login form submissions.
+ */
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
+    /**
+     * Forwards the user to the login page.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 
+    /**
+     * Validates the login form and starts a session if the user is valid.
+     * @param request the HTTP request with form data
+     * @param response the HTTP response for redirects or forwards
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
