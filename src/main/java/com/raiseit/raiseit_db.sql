@@ -78,6 +78,7 @@ CREATE TABLE contact_inquiries (
                                    id INT AUTO_INCREMENT PRIMARY KEY,
                                    name VARCHAR(100) NOT NULL,
                                    email VARCHAR(100) NOT NULL,
+                                   phone VARCHAR(20) NULL,
                                    message TEXT NOT NULL,
                                    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

@@ -138,13 +138,15 @@
 }
 
 .hero-card {
-    background: var(--white);
+    background: transparent;
+    backdrop-filter: blur(10px);
     border-radius: 16px;
     padding: 28px;
     width: 100%;
     max-width: 360px;
     box-shadow: 0 20px 60px rgba(79, 70, 229, 0.15);
-    border: 1px solid #e0e7ff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .hero-card-header {
@@ -156,25 +158,25 @@
 
 .hero-ref {
     font-size: 0.75rem;
-    color: var(--text-light);
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 600;
 }
 
 .hero-card-title {
     font-size: 1rem;
     font-weight: 700;
-    color: var(--text);
+    color: rgba(255, 255, 255, 0.95);
     margin-bottom: 8px;
 }
 
 .hero-card-meta {
     font-size: 0.82rem;
-    color: var(--text-light);
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: 16px;
 }
 
 .hero-progress {
-    background: #e0e7ff;
+    background: rgba(255, 255, 255, 0.25);
     border-radius: 999px;
     height: 6px;
     margin-bottom: 12px;
@@ -190,7 +192,7 @@
 
 .hero-card-status {
     font-size: 0.82rem;
-    color: var(--text-light);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* FEATURES */

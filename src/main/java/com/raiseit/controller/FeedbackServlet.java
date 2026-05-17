@@ -51,8 +51,7 @@ public class FeedbackServlet extends HttpServlet {
 
             Feedback existing = feedbackDAO.getFeedbackByComplaintId(complaintId);
             if (existing != null) {
-                request.setAttribute("error", "Feedback has already been submitted for this complaint.");
-                request.getRequestDispatcher("/error.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/student/complaints?error=already_submitted");
                 return;
             }
 
@@ -105,8 +104,7 @@ public class FeedbackServlet extends HttpServlet {
 
             Feedback existing = feedbackDAO.getFeedbackByComplaintId(complaintId);
             if (existing != null) {
-                request.setAttribute("error", "Feedback has already been submitted for this complaint.");
-                request.getRequestDispatcher("/error.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/student/complaints?error=already_submitted");
                 return;
             }
 
