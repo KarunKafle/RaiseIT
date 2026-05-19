@@ -52,10 +52,12 @@
         <nav>
             <c:choose>
                 <c:when test="${sessionScope.userRole == 'student'}">
+                    <a href="${pageContext.request.contextPath}/student/search">Search</a>
                     <a href="${pageContext.request.contextPath}/student/dashboard">Dashboard</a>
                     <a href="${pageContext.request.contextPath}/student/complaints">My Complaints</a>
                     <a href="${pageContext.request.contextPath}/student/submit">Submit Complaint</a>
                     <a href="${pageContext.request.contextPath}/faq" class="active">FAQ</a>
+                    <a href="${pageContext.request.contextPath}/student/profile">My Profile</a>
                     <a href="${pageContext.request.contextPath}/logout">Logout</a>
                 </c:when>
                 <c:otherwise>
