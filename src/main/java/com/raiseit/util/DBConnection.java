@@ -10,9 +10,9 @@ import java.sql.SQLException;
  */
 public class DBConnection {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/raiseit_db";
+    private static final String URL = "jdbc:mysql://localhost:3306/raiseit";
     private static final String USER = "root";
-    private static final String PASSWORD = "1234";
+    private static final String PASSWORD = "root";
 
     /**
      * Opens a new connection to the RaiseIT database.

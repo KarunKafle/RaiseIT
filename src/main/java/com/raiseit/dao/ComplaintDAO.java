@@ -93,16 +93,24 @@ public class ComplaintDAO {
      * @throws SQLException if a database error occurs
      */
     public boolean deleteComplaint(int complaintId) throws SQLException {
-        String sql1 = "DELETE FROM assignments WHERE complaint_id = ?";
-        String sql2 = "DELETE FROM complaints WHERE id = ?";
+        String sql1 = "DELETE FROM responses WHERE complaint_id = ?";
+        String sql2 = "DELETE FROM feedback WHERE complaint_id = ?";
+        String sql3 = "DELETE FROM assignments WHERE complaint_id = ?";
+        String sql4 = "DELETE FROM complaints WHERE id = ?";
         try (Connection conn = DBConnection.getConnection()) {
             conn.setAutoCommit(false);
             try (PreparedStatement ps1 = conn.prepareStatement(sql1);
-                 PreparedStatement ps2 = conn.prepareStatement(sql2)) {
+                 PreparedStatement ps2 = conn.prepareStatement(sql2);
+                 PreparedStatement ps3 = conn.prepareStatement(sql3);
+                 PreparedStatement ps4 = conn.prepareStatement(sql4)) {
                 ps1.setInt(1, complaintId);
                 ps1.executeUpdate();
                 ps2.setInt(1, complaintId);
                 ps2.executeUpdate();
+                ps3.setInt(1, complaintId);
+                ps3.executeUpdate();
+                ps4.setInt(1, complaintId);
+                ps4.executeUpdate();
                 conn.commit();
                 return true;
             } catch (SQLException e) {
