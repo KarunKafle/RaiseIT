@@ -3,9 +3,9 @@
   // Smart redirect — logged in users go to their dashboard
   String role = (String) session.getAttribute("role");
   if (role != null) {
-    if (role.equals("admin")) response.sendRedirect(request.getContextPath() + "/admin/dashboard");
-    else if (role.equals("staff")) response.sendRedirect(request.getContextPath() + "/staff/dashboard");
-    else response.sendRedirect(request.getContextPath() + "/student/dashboard");
+    if (role.equals("admin")) response.sendRedirect(request.getContextPath() + "/admin/dashboard?warning=logout_required");
+    else if (role.equals("staff")) response.sendRedirect(request.getContextPath() + "/staff/dashboard?warning=logout_required");
+    else response.sendRedirect(request.getContextPath() + "/student/dashboard?warning=logout_required");
     return;
   }
 %>

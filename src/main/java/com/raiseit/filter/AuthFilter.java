@@ -43,6 +43,7 @@ public class AuthFilter implements Filter {
         String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
 
         boolean isPublicPath = path.equals("/") ||
+                path.equals("/home") ||
                 path.equals("/login") ||
                 path.equals("/register") ||
                 path.equals("/about") ||

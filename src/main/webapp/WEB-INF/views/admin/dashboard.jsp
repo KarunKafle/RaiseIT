@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.raiseit.model.Complaint" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,6 +27,64 @@
     </nav>
   </div>
   <div class="main-content">
+    <c:if test="${param.warning == 'logout_required'}">
+      <style>
+        @keyframes slideInRight {
+          from { transform: translateX(120%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeOut {
+          from { opacity: 1; }
+          to { opacity: 0; }
+        }
+        .toast-warning {
+          position: fixed;
+          top: 80px;
+          right: 20px;
+          background: var(--warning);
+          color: #ffffff;
+          padding: 12px 16px;
+          border-radius: 10px;
+          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          z-index: 9999;
+          animation: slideInRight 0.4s ease-out;
+          overflow: hidden;
+        }
+        .toast-warning.fade-out {
+          animation: fadeOut 0.4s ease-in forwards;
+        }
+        .toast-progress {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          height: 3px;
+          width: 100%;
+          background: rgba(255, 255, 255, 0.7);
+          animation: toastTimer 5s linear forwards;
+        }
+        @keyframes toastTimer {
+          from { width: 100%; }
+          to { width: 0%; }
+        }
+      </style>
+      <div class="toast-warning" id="logout-required-toast">
+        <span>You are already logged in. Please logout first to access the home page.</span>
+        <div class="toast-progress"></div>
+      </div>
+      <script>
+        (function () {
+          var toast = document.getElementById('logout-required-toast');
+          if (!toast) return;
+          setTimeout(function () {
+            toast.classList.add('fade-out');
+            setTimeout(function () { toast.remove(); }, 400);
+          }, 5000);
+        })();
+      </script>
+    </c:if>
     <div class="page-header">
       <h1>Welcome, <%= session.getAttribute("userFullName") %></h1>
     </div>
