@@ -39,7 +39,20 @@
     body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden;}
 
     /* NAV */
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 5%;height:68px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(79,70,229,0.12);box-shadow:0 1px 24px rgba(79,70,229,0.07);}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 5%;height:68px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(79,70,229,0.12);box-shadow:0 1px 24px rgba(79,70,229,0.07);} 
+    .nav-right{display:flex;align-items:center;gap:12px;}
+    .hamburger{display:none;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;border:1.5px solid rgba(79,70,229,0.25);background:rgba(255,255,255,0.9);color:var(--indigo-deeper);font-size:1.3rem;cursor:pointer;transition:all 0.2s;}
+    .hamburger:hover{background:var(--indigo-light);border-color:var(--indigo);}
+    .mobile-menu{position:fixed;top:68px;left:0;right:0;z-index:99;background:linear-gradient(135deg,#1e1960 0%,#2d2780 50%,#3d35a0 100%);border-bottom:1px solid rgba(255,255,255,0.08);box-shadow:0 18px 36px rgba(30,27,75,0.25);max-height:0;overflow:hidden;transition:max-height 0.3s ease;}
+    .mobile-menu.open{max-height:500px;}
+    .mobile-menu-inner{padding:18px 6% 22px;display:flex;flex-direction:column;gap:12px;}
+    .mobile-links{display:flex;flex-direction:column;gap:8px;}
+    .mobile-links a{color:rgba(255,255,255,0.9);text-decoration:none;font-size:15px;font-weight:500;padding:10px 12px;border-radius:10px;transition:all 0.2s;}
+    .mobile-links a:hover{background:rgba(255,255,255,0.12);color:#ffffff;}
+    .mobile-actions{display:flex;flex-direction:column;gap:10px;padding-top:6px;}
+    .mobile-actions .btn-ghost{border-color:rgba(255,255,255,0.35);color:#ffffff;}
+    .mobile-actions .btn-ghost:hover{background:rgba(255,255,255,0.15);}
+    .mobile-actions .btn-primary{box-shadow:none;}
     .nav-logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--indigo-deeper);display:flex;align-items:center;gap:8px;}
     .nav-logo-dot{width:8px;height:8px;border-radius:50%;background:var(--indigo);display:inline-block;box-shadow:0 0 0 3px rgba(79,70,229,0.15);}
     .nav-logo span{color:var(--indigo);}
@@ -125,8 +138,14 @@
     .footer-logo span{color:var(--indigo);}
     .footer-links{display:flex;gap:24px;list-style:none;}
     .footer-links a{font-size:14px;color:var(--text-light);text-decoration:none;transition:color 0.2s;}
-    .footer-links a:hover{color:var(--indigo);}
-    .footer-copy{font-size:13px;color:var(--text-light);}
+    .footer-links a:hover{color:var(--indigo);} 
+    .footer-copy{font-size:13px;color:var(--text-light);} 
+
+    @media (max-width: 768px){
+      .nav-links{display:none;}
+      .nav-actions{display:none;}
+      .hamburger{display:inline-flex;}
+    }
   </style>
 </head>
 <body>
@@ -141,12 +160,31 @@
     <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     <li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
   </ul>
-  <div class="nav-actions">
-    <div class="nav-divider"></div>
-    <a href="${pageContext.request.contextPath}/login" class="btn-ghost">Login</a>
-    <a href="${pageContext.request.contextPath}/register" class="btn-primary">Register</a>
+  <div class="nav-right">
+    <div class="nav-actions">
+      <div class="nav-divider"></div>
+      <a href="${pageContext.request.contextPath}/login" class="btn-ghost">Login</a>
+      <a href="${pageContext.request.contextPath}/register" class="btn-primary">Register</a>
+    </div>
+    <button class="hamburger" id="hamburger-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">☰</button>
   </div>
 </nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu-inner">
+    <div class="mobile-links">
+      <a href="#features" data-menu-close>Features</a>
+      <a href="#how" data-menu-close>How It Works</a>
+      <a href="${pageContext.request.contextPath}/faq" data-menu-close>FAQ</a>
+      <a href="${pageContext.request.contextPath}/about" data-menu-close>About</a>
+      <a href="${pageContext.request.contextPath}/contact" data-menu-close>Contact</a>
+    </div>
+    <div class="mobile-actions">
+      <a href="${pageContext.request.contextPath}/login" class="btn-ghost" data-menu-close>Login</a>
+      <a href="${pageContext.request.contextPath}/register" class="btn-primary" data-menu-close>Register</a>
+    </div>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -329,6 +367,37 @@
     <div class="footer-copy">© 2026 RaiseIT. Student Complaint & Grievance Management System.</div>
   </div>
 </footer>
+
+<script>
+  (function () {
+    var toggle = document.getElementById('hamburger-toggle');
+    var menu = document.getElementById('mobile-menu');
+    if (!toggle || !menu) return;
+
+    var closeMenu = function () {
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    };
+
+    toggle.addEventListener('click', function () {
+      var isOpen = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    menu.addEventListener('click', function (event) {
+      var target = event.target;
+      if (target && target.hasAttribute('data-menu-close')) {
+        closeMenu();
+      }
+    });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 768) {
+        closeMenu();
+      }
+    });
+  })();
+</script>
 
 </body>
 </html>
