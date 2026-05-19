@@ -14,9 +14,19 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Handles complaint submission for students.
+ */
 @WebServlet("/student/submit")
 public class SubmitComplaintServlet extends HttpServlet {
 
+    /**
+     * Loads complaint categories and forwards to the submit form.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
@@ -30,6 +40,13 @@ public class SubmitComplaintServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Validates input and creates a new complaint record.
+     * @param request the HTTP request with form data
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();

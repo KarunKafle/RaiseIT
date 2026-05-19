@@ -1,9 +1,16 @@
 package com.raiseit.model;
 
+/**
+ * Represents a complaint category in the system.
+ */
 public class Category {
+    /** The unique ID of the category. */
     private int id;
+    /** The display name of the category. */
     private String name;
+    /** The ID of the department that owns this category. */
     private int departmentId;
+    /** The name of the department for display. */
     private String departmentName;
 
     public Category() {}

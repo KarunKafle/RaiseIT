@@ -14,9 +14,19 @@ import java.time.LocalDate;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Shows complaints assigned to a staff member.
+ */
 @WebServlet("/staff/complaints")
 public class StaffComplaintsServlet extends HttpServlet {
 
+    /**
+     * Loads assigned complaints and forwards to the list view.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -43,6 +53,13 @@ public class StaffComplaintsServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Updates a complaint status based on staff actions.
+     * @param request the HTTP request with action data
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String complaintIdStr = request.getParameter("complaintId");

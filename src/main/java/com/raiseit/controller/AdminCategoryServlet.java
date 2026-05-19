@@ -13,8 +13,18 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Manages complaint categories for admin users.
+ */
 public class AdminCategoryServlet extends HttpServlet {
 
+    /**
+     * Loads categories and departments for the admin view.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
@@ -41,6 +51,13 @@ public class AdminCategoryServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Handles add, update, and delete actions for categories.
+     * @param request the HTTP request with action data
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");

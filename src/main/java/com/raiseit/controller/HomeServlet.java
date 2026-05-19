@@ -8,9 +8,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Redirects logged-in users away from the landing page.
+ */
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
 
+    /**
+     * Sends logged-in users to their dashboard or forwards to index.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

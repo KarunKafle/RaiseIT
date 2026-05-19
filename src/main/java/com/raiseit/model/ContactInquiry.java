@@ -2,12 +2,21 @@ package com.raiseit.model;
 
 import java.sql.Timestamp;
 
+/**
+ * Represents a contact inquiry submitted from the public form.
+ */
 public class ContactInquiry {
+    /** The unique ID of the inquiry. */
     private int id;
+    /** The name provided by the sender. */
     private String name;
+    /** The email address of the sender. */
     private String email;
+    /** The phone number provided by the sender. */
     private String phone;
+    /** The message content submitted by the sender. */
     private String message;
+    /** The time when the inquiry was submitted. */
     private Timestamp submittedAt;
 
     public ContactInquiry() {}

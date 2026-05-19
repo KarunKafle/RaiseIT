@@ -13,9 +13,19 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Lets students view and update their profile details.
+ */
 @WebServlet("/student/profile")
 public class StudentProfileServlet extends HttpServlet {
 
+    /**
+     * Loads the current student profile for the view.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -25,6 +35,13 @@ public class StudentProfileServlet extends HttpServlet {
                 .forward(request, response);
     }
 
+    /**
+     * Updates student profile data and password if provided.
+     * @param request the HTTP request with form data
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();

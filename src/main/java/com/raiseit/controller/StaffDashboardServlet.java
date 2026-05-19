@@ -14,9 +14,19 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Builds summary stats for the staff dashboard.
+ */
 @WebServlet("/staff/dashboard")
 public class StaffDashboardServlet extends HttpServlet {
 
+    /**
+     * Loads staff stats and forwards to the dashboard view.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();

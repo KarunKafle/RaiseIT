@@ -13,8 +13,18 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Handles student feedback for resolved complaints.
+ */
 public class FeedbackServlet extends HttpServlet {
 
+    /**
+     * Loads the feedback form for a resolved complaint.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String complaintIdParam = request.getParameter("complaintId");
@@ -64,6 +74,13 @@ public class FeedbackServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Validates and saves a feedback submission.
+     * @param request the HTTP request with rating data
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String complaintIdParam = request.getParameter("complaintId");

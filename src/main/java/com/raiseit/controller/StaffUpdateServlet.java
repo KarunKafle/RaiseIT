@@ -11,8 +11,18 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Handles status updates on staff-assigned complaints.
+ */
 public class StaffUpdateServlet extends HttpServlet {
 
+    /**
+     * Validates a status change and updates the complaint.
+     * @param request the HTTP request with status data
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);

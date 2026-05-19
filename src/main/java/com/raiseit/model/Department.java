@@ -2,10 +2,17 @@ package com.raiseit.model;
 
 import java.sql.Timestamp;
 
+/**
+ * Represents a department that handles complaint categories.
+ */
 public class Department {
+    /** The unique ID of the department. */
     private int id;
+    /** The display name of the department. */
     private String name;
+    /** The description of the department's scope. */
     private String description;
+    /** The time when the department was created. */
     private Timestamp createdAt;
 
     public Department() {}
