@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Serves the About page for public visitors.
  */
-@WebServlet("/about")
+@WebServlet("/About")
 public class AboutServlet extends HttpServlet {
 
     /**
