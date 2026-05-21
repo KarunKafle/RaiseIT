@@ -19,7 +19,7 @@ public class DBConnection {
      * @return a live database connection
      * @throws SQLException if the driver is missing or the connection fails
      */
-    public static connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             return DriverManager.getConnection(URL, USER, PASSWORD);
