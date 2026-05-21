@@ -11,7 +11,7 @@
     <div class="auth-card">
         <div class="auth-header">
             <h1>Raise<span>IT</span></h1>
-            <p>Something went wrong</p>
+            <p>Something Went wrong</p>
         </div>
         <div class="alert alert-error">
             <%= request.getAttribute("error") != null ? request.getAttribute("error") : "An unexpected error occurred." %>
