@@ -1,16 +1,26 @@
 package com.raiseit.model;
 
 import java.sql.Timestamp;
-// Model class representing a registered user
 
+/**
+ * Represents a registered user account in the system.
+ */
 public class User {
+    /** The unique ID of the user. */
     private int id;
+    /** The full name of the user. */
     private String fullName;
+    /** The email address used for login. */
     private String email;
+    /** The hashed password for the account. */
     private String password;
+    /** The role assigned to the user. */
     private String role;
+    /** The department ID for staff users, if any. */
     private Integer departmentId;
+    /** The account status such as pending or active. */
     private String status;
+    /** The time when the account was created. */
     private Timestamp createdAt;
 
     public User() {}

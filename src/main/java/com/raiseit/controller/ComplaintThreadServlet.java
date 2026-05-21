@@ -16,8 +16,18 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Displays and updates the complaint message thread.
+ */
 public class ComplaintThreadServlet extends HttpServlet {
 
+    /**
+     * Loads a complaint thread for an authorized user.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String complaintIdParam = request.getParameter("complaintId");
@@ -79,6 +89,13 @@ public class ComplaintThreadServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Adds a reply to the complaint thread if allowed.
+     * @param request the HTTP request with message data
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String complaintIdParam = request.getParameter("complaintId");

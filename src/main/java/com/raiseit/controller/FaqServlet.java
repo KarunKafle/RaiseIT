@@ -9,8 +9,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Shows the FAQ page and manages student saved questions.
+ */
 public class FaqServlet extends HttpServlet {
 
+    /**
+     * Loads the saved FAQ list and forwards to the FAQ view.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
@@ -21,6 +31,13 @@ public class FaqServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/views/faq.jsp").forward(request, response);
     }
 
+    /**
+     * Adds or removes a saved FAQ item for a student.
+     * @param request the HTTP request with action data
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);

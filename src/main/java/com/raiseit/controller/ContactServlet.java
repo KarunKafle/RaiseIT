@@ -11,15 +11,32 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Handles the contact page and form submissions.
+ */
 @WebServlet("/contact")
 public class ContactServlet extends HttpServlet {
 
+    /**
+     * Forwards the user to the contact form view.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/views/contact.jsp")
                 .forward(request, response);
     }
 
+    /**
+     * Validates and saves a contact inquiry.
+     * @param request the HTTP request with form data
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String name = request.getParameter("name");

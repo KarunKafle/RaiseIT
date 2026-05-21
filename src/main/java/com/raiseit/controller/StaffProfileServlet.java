@@ -12,8 +12,18 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Allows staff users to view and update their profile.
+ */
 public class StaffProfileServlet extends HttpServlet {
 
+    /**
+     * Loads the staff profile data for the view.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -35,6 +45,13 @@ public class StaffProfileServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Updates staff profile details and password if provided.
+     * @param request the HTTP request with form data
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();

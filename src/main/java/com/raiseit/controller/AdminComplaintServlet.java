@@ -14,9 +14,19 @@ import java.time.LocalDate;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Lets admins review and manage all complaints.
+ */
 @WebServlet("/admin/complaints")
 public class AdminComplaintServlet extends HttpServlet {
 
+    /**
+     * Loads complaints and staff lists for the admin view.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
@@ -42,6 +52,13 @@ public class AdminComplaintServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Updates a complaint based on the admin action.
+     * @param request the HTTP request with action data
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");

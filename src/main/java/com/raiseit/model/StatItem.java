@@ -1,7 +1,12 @@
 package com.raiseit.model;
 
+/**
+ * Represents a label and count used in reports.
+ */
 public class StatItem {
+    /** The label for this statistic. */
     private String label;
+    /** The count value for this statistic. */
     private int count;
 
     public StatItem() {}

@@ -12,8 +12,18 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Shows resolved complaint history for staff users.
+ */
 public class StaffHistoryServlet extends HttpServlet {
 
+    /**
+     * Loads resolved complaints and forwards to the history view.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);

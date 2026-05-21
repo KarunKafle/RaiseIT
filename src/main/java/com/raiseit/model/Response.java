@@ -2,13 +2,23 @@ package com.raiseit.model;
 
 import java.sql.Timestamp;
 
+/**
+ * Represents a single reply in a complaint thread.
+ */
 public class Response {
+    /** The unique ID of the response. */
     private int id;
+    /** The complaint ID that this reply belongs to. */
     private int complaintId;
+    /** The ID of the user who wrote the reply. */
     private int userId;
+    /** The reply message content. */
     private String message;
+    /** The time when the reply was created. */
     private Timestamp createdAt;
+    /** The full name of the user for display. */
     private String userFullName;
+    /** The role of the user who posted the reply. */
     private String userRole;
 
     public Response() {}

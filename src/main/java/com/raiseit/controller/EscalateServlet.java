@@ -11,8 +11,18 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Lets students escalate assigned complaints.
+ */
 public class EscalateServlet extends HttpServlet {
 
+    /**
+     * Escalates a complaint when the status allows it.
+     * @param request the HTTP request with complaint data
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);

@@ -3,24 +3,45 @@ package com.raiseit.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+/**
+ * Represents a student complaint record and its status.
+ */
 public class Complaint {
+    /** The unique ID of the complaint. */
     private int id;
+    /** The public reference number shown to users. */
     private String referenceNumber;
+    /** The ID of the student who submitted the complaint. */
     private int userId;
+    /** The complaint title entered by the student. */
     private String title;
+    /** The detailed complaint description. */
     private String description;
+    /** The category ID selected for this complaint. */
     private int categoryId;
+    /** The priority level for this complaint. */
     private String priority;
+    /** The current status of the complaint. */
     private String status;
+    /** Whether the complaint was submitted anonymously. */
     private boolean isAnonymous;
+    /** The timestamp when the complaint was created. */
     private Timestamp createdAt;
+    /** The full name of the student for display. */
     private String userName;
+    /** The category name for display. */
     private String categoryName;
+    /** The department name for display. */
     private String departmentName;
+    /** The student name for display in staff views. */
     private String studentName;
+    /** The number of messages in the complaint thread. */
     private int messageCount;
+    /** The deadline date for resolving the complaint. */
     private Date deadline;
+    /** Whether the complaint is overdue. */
     private boolean overdue;
+    /** Whether the complaint is due today. */
     private boolean dueToday;
 
     public Complaint() {}

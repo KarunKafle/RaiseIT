@@ -12,9 +12,19 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Manages user accounts for admin users.
+ */
 @WebServlet("/admin/users")
 public class AdminUserServlet extends HttpServlet {
 
+    /**
+     * Loads all users for the admin view.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
@@ -29,6 +39,13 @@ public class AdminUserServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Updates a user status or deletes a user.
+     * @param request the HTTP request with action data
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");

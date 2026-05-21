@@ -12,9 +12,19 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Builds summary data for the student dashboard.
+ */
 @WebServlet("/student/dashboard")
 public class StudentDashboardServlet extends HttpServlet {
 
+    /**
+     * Loads student complaint stats and forwards to the dashboard.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();

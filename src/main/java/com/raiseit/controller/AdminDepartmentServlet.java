@@ -11,8 +11,18 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Manages departments for admin users.
+ */
 public class AdminDepartmentServlet extends HttpServlet {
 
+    /**
+     * Loads departments and optional edit data.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
@@ -35,6 +45,13 @@ public class AdminDepartmentServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Handles add, update, and delete actions for departments.
+     * @param request the HTTP request with action data
+     * @param response the HTTP response
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
