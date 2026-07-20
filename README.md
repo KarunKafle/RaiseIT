@@ -1,2 +1,2 @@
 # RaiseIT
-Student Complaint &amp; Grievance Management System
+This is a Student Complaint &amp; Grievance Management System
